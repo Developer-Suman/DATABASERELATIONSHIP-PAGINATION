@@ -8,6 +8,7 @@ ConfigurationManager configuration = builder.Configuration;
 builder.Services
     .AddBLL()
     .AddDAL(configuration);
+  
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
