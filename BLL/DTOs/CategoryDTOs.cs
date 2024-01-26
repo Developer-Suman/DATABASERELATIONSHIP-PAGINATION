@@ -10,6 +10,6 @@ namespace BLL.DTOs
     {
         public int CategoryId { get; set; }
         public string CategoryName { get;set; }
-        public ICollection<ProductDTOs> Products { get; set; }
+        public IList<ProductDTOs> Products { get; set; }
     }
 }
