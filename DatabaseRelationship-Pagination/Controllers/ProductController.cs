@@ -1,4 +1,5 @@
-﻿using DAL.ViewModel;
+﻿
+using BLL.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DatabaseRelationship_Pagination.Controllers
@@ -10,7 +11,7 @@ namespace DatabaseRelationship_Pagination.Controllers
             return View();
         }
 
-        public IActionResult Create(ProductViewModel productViewModel)
+        public IActionResult Create(ProductDTOs productViewModel)
         {
             return View();
         }
