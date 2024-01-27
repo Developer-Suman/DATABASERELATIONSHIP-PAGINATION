@@ -1,4 +1,6 @@
 using BLL;
+using BLL.Repository.Implementation;
+using BLL.Repository.Interface;
 using DAL;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,7 +10,8 @@ ConfigurationManager configuration = builder.Configuration;
 builder.Services
     .AddBLL()
     .AddDAL(configuration);
-  
+
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -34,3 +37,8 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+
+
+    
+  

@@ -1,5 +1,68 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using BLL.DTOs;
+@model ProductDTOs
+
 @{
+    ViewData["Title"] = "Create";
 }
+
+
+<div class="add-form">
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-7 ">
+                <div style="background-color:#2BA9AF;">
+                    <h1 class="update-header">Add Your Product</h1>
+                </div>
+                <form method="Post" enctype="multipart/form-data" asp-action="Create" asp-controller="Product">
+                    <div class="row">
+                        <div class="col-md-2">
+
+                            @*     @for(int i =0; i< Model.Products.Count; i++)
+                            {
+                            <label asp-for="Products[i].ProductName"></label>
+                            <input asp-for="Products[i].ProductName" class="form-control" />
+
+                            <label asp-for="Products[i].Price"></label>
+                            <input asp-for="Products[i].Price" class="form-control" />
+
+                            }*@
+
+
+                        </div>
+                        <div class="col-md-10">
+                            <label asp-for="ProductName"></label>
+                            <input asp-for="ProductName" class="form-control" />
+                            <label asp-for="Price"></label>
+                            <input asp-for="Price" class="form-control" />
+                        </div>
+                    </div>
+
+
+
+                    <div class="button-part mt-4">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <input type="submit" value="ADD Product" class="btn btn-primary" />
+
+                            </div>
+                            <div class="col-md-9">
+                                <a asp-action="Index" asp-controller="Journal" class="btn btn-danger">BACK TO ADMIN</a>
+
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </form>
+            </div>
+            <div class="col-md-3">
+            </div>
+        </div>
+    </div>
+</div>
+
+

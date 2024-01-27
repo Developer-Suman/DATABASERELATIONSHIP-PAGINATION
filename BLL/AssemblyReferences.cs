@@ -1,4 +1,8 @@
 ﻿
+using BLL.Repository.Implementation;
+using BLL.Repository.Interface;
+using BLL.Services.Implementation;
+using BLL.Services.Interface;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
 using System.Text;
@@ -10,7 +14,10 @@ namespace BLL
     {
         public static IServiceCollection AddBLL(this IServiceCollection services)
         {
-            
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IProductServices, ProductServices>();
+
+
             return services;
         }
     }
