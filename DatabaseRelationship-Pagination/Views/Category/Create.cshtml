@@ -12,7 +12,7 @@
             </div>
             <div class="col-md-7 ">
                 <div style="background-color:#2BA9AF;">
-                    <h1 class="update-header">Add Your Journal</h1>
+                    <h1 class="update-header">Add Your Category</h1>
                 </div>
                 <form method="Post" enctype="multipart/form-data" asp-action="Create" asp-controller="Category">
                     <div class="row">
@@ -31,6 +31,7 @@
                     
                         </div>
                         <div class="col-md-10">
+                            <label asp-for="CategoryName"></label>
                             <input asp-for="CategoryName" class="form-control" />
                         </div>
                     </div>

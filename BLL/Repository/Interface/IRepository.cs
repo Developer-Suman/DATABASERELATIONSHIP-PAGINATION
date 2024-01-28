@@ -14,12 +14,12 @@ namespace BLL.Repository.Interface
         Task<Dictionary<TKey, List<TEntity>>> GroupBy<TKey>(Expression<Func<TEntity, TKey>> keySelector);
         Task<Dictionary<TKey, int>> GroupByCount<TKey>(Expression<Func<TEntity, TKey>> keySelector);
         Task<TEntity> GetSingle(Expression<Func<TEntity, bool>> predicate);
-        Task<TEntity> GetSingleIncluding(Expression<Func<TEntity, bool>> condition, params Expression<Func<TEntity, object>>[] includingproperties);
+        Task<TEntity> GetSingleIncluding(Expression<Func<TEntity, bool>> condition, params Expression<Func<TEntity, object>>[] includeProperties);
+        Task<IEnumerable<TEntity>> GetConditional(Expression<Func<TEntity, bool>> predicate);
         Task<IEnumerable<TEntity>> GetAll();
-        Task<IEnumerable<TEntity>> GetCondition(Expression<Func<TEntity, bool>> predicate);
         Task<IEnumerable<TEntity>> GetAllIncluding(params Expression<Func<TEntity, object>>[] includeProperties);
-        IEnumerable<TEntity> GetWithShaping(params Expression<Func<TEntity, object>>[] includeproperties);
-        Task<IEnumerable<TEntity>> GetConditionalIncluding(Expression<Func<TEntity, bool>> condition, params Expression<Func<TEntity, object>>[] includeproperties);
+        IEnumerable<TEntity> GetWithShaping(params Expression<Func<TEntity, object>>[] includeProperties);
+        Task<IEnumerable<TEntity>> GetConditionalIncluding(Expression<Func<TEntity, bool>> condition, params Expression<Func<TEntity, object>>[] includeProperties);
         Task Add(TEntity entity);
         void Update(TEntity entity);
         void Delete(TEntity entity);

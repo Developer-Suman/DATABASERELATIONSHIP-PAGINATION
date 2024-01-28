@@ -14,8 +14,11 @@ namespace BLL
     {
         public static IServiceCollection AddBLL(this IServiceCollection services)
         {
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            services.AddScoped<IUnitOfWorkTwo, UnitOfWorkTwo>();
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IProductServices, ProductServices>();
+            services.AddScoped<IcategoryServices, CategoryServices>();
 
 
             return services;

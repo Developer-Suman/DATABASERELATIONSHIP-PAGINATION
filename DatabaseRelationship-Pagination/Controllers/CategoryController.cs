@@ -1,4 +1,5 @@
 ﻿using BLL.DTOs;
+using BLL.Services.Interface;
 using DAL.DbContext;
 using DAL.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -7,44 +8,31 @@ namespace DatabaseRelationship_Pagination.Controllers
 {
     public class CategoryController : Controller
     {
-       private readonly ApplicationDbContext _context;
+       private readonly IcategoryServices _categoryServices;
 
-        public CategoryController(ApplicationDbContext applicationDbContext)
+        public CategoryController(IcategoryServices icategoryServices)
         {
-            _context = applicationDbContext;
+           _categoryServices = icategoryServices;
             
         }
 
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             return View();
         }
 
 
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult Create(CategoryDTOs categoryDTOs)
+        public async Task<IActionResult> Create(CategoryDTOs categoryDTOs)
         {
-            Category category = new Category()
-            {
-                CategoryName = categoryDTOs.CategoryName,
-                Products = _context.Products.Select(p => new Product()
-                {
-                    ProductName = p.ProductName,
-                    Price = p.Price,
-                }).ToList()
-
-
-            };
-
-            _context.Categories.Add(category);
-            _context.SaveChanges();
+           View(await _categoryServices.SaveCategory(categoryDTOs));
             return RedirectToAction("Index");
 
         }

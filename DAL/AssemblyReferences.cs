@@ -20,10 +20,6 @@ namespace DAL
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), x => x.MigrationsAssembly("DAL"));
 
             });
-            
-
-
-          
             return services;
         }
     }
