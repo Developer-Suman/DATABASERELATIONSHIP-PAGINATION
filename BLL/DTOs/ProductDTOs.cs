@@ -12,6 +12,8 @@ namespace BLL.DTOs
         public int ProductId { get; set; }
         public string ProductName { get; set; }
         public decimal Price { get; set; }
+
+        public List<CategoryDTOs> categoryDTOs { get; set; }
         public int CategoryId { get; set; }
         public CategoryDTOs categoryDTos { get; set; }
     }

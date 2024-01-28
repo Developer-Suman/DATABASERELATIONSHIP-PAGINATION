@@ -12,9 +12,9 @@ namespace BLL.Services.Implementation
 {
     public class ProductServices : IProductServices
     {
-        private readonly IUnitOfWork uow;
+        private readonly IUnitOfWorkTwo uow;
 
-        public ProductServices(IUnitOfWork unitOfWork)
+        public ProductServices(IUnitOfWorkTwo unitOfWork)
         {
             uow = unitOfWork;
             
@@ -61,6 +61,8 @@ namespace BLL.Services.Implementation
                     ProductId = productDTOs.ProductId,
                     Price = productDTOs.Price,
                     ProductName = productDTOs.ProductName,
+                    CategoryId = productDTOs.CategoryId
+
 
                 };
 
@@ -69,6 +71,7 @@ namespace BLL.Services.Implementation
                     ProductId = productDTOs.ProductId,
                     Price = productDTOs.Price,
                     ProductName = productDTOs.ProductName,
+                    //CategoryId = productDTOs.CategoryId,
 
                 };
                 await uow.Repository<Product>().Add(productAdd);

@@ -9,16 +9,21 @@ using System.Threading.Tasks;
 
 namespace BLL.Repository.Implementation
 {
-    public class UnitOfWork : IUnitOfWork
+    public class UnitOfWorkTwo : IUnitOfWorkTwo
     {
         private readonly ApplicationDbContext _context;
         private bool _disposed;
         private Hashtable _repositories;
 
-        public UnitOfWork(ApplicationDbContext applicationDbContext)
+        public UnitOfWorkTwo(ApplicationDbContext applicationDbContext)
         {
             _context = applicationDbContext;
-
+            
+        }
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         public IRepository<TEntity> Repository<TEntity>() where TEntity : class
@@ -56,12 +61,6 @@ namespace BLL.Repository.Implementation
 
                 _disposed = true;
             }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
         }
     }
 }

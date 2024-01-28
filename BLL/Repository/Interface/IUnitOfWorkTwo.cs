@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Repository.Interface
 {
-    public interface IUnitOfWork : IDisposable
+    public interface IUnitOfWorkTwo : IDisposable
     {
         IRepository<TEntity> Repository<TEntity>() where TEntity : class;
         Task<int> SaveChangesAsync();

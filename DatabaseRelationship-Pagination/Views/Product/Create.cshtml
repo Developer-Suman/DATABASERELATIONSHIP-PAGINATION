@@ -36,6 +36,8 @@
                             <input asp-for="ProductName" class="form-control" />
                             <label asp-for="Price"></label>
                             <input asp-for="Price" class="form-control" />
+                            <label asp-for="categoryDTos.CategoryName"></label>
+                            @Html.DropDownListFor(x=>x.CategoryId,(SelectList)ViewBag.Category, "Select Category",new {@class ="form-control"})
                         </div>
                     </div>
 
