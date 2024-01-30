@@ -34,6 +34,35 @@
                             <label asp-for="CategoryName"></label>
                             <input asp-for="CategoryName" class="form-control" />
                         </div>
+
+                        <table id="productTable" class="table">
+                            <thead>
+                                <tr>
+                                    <th>Product Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="detailRow">
+                                    <td>
+                                        <input type="text" name="Products[0].ProductName" class="form-control" required />
+                                    </td>
+                                    <td>
+                                        <input type="text" name="Products[0].Price" class="form-control" required />
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger removeRow">Remove</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="2">
+                                        <button type="button" class="btn btn-primary" id="addRow">Add Row</button>
+                                    </td>
+                                </tr>
+                            </tfoot>
+
+                        </table>
                     </div>
 
                     
@@ -61,5 +90,26 @@
         </div>
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+    $(document).ready(function(){
+        //Add Row
+        $('#addRow').click(function(){
+            var rowCount = $('#productTable tbody tr').length;
+            var newRow = $('.detailRow').first().clone();
+            newRow.find('input').val('');
+            newRow.find('input').attr('name', 'Products[' + rowCount + '].ProductName');
+            newRow.appendTo($('#productTable tbody'));
+        });
+
+        $(document).on('click', '.removeRow', function(){
+            if ($('#productTable tbody tr').length > 1)
+            {
+                $(this).closest('tr').remove();
+            }
+        });
+    });
+</script>
 
 

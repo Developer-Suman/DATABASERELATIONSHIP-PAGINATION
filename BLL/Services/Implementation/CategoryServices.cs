@@ -62,10 +62,27 @@ namespace BLL.Services.Implementation
         {
             try
             {
+
+                List<ProductDTOs> productDTOs = categoryDTOs.Products.ToList();
+
+                List<Product> productsList = new List<Product>();
+                foreach (var productDTO in productDTOs)
+                {
+                    var products = new Product()
+                    {
+                        ProductName = productDTO.ProductName,
+                        Price = productDTO.Price,
+                        CategoryId = productDTO.CategoryId,
+
+                    };
+                    productsList.Add(products);
+                }
+               
                 var categoryAdd = new Category()
                 {
                     CategoryId = categoryDTOs.CategoryId,
                     CategoryName = categoryDTOs.CategoryName,
+                    Products = productsList
 
                 };
 
