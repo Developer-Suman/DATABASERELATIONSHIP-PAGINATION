@@ -4,7 +4,9 @@ using BLL.Services.Interface;
 using DAL.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,22 +21,43 @@ namespace BLL.Services.Implementation
             uow = unitOfWork;
             
         }
-        public Task<int> DeleteCategory(int CategoriesId)
+
+        public async Task<CategoryDTOs> DeleteCategory(int CategoriesId, CategoryDTOs categoryDTOs)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var category = await uow.Repository<Category>().GetById(CategoriesId) ?? throw new Exception("Category not found");
+                uow.Repository<Category>().Delete(category);
+                await uow.SaveChangesAsync();
+                var categoryDTO = new CategoryDTOs()
+                {
+                    CategoryName = category.CategoryName
+                };
+                return categoryDTO;
+
+
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occured while deleteing Categories");
+            }
         }
 
-        public async Task<IEnumerable<CategoryDTOs>> GetAllCategory()
+        public async Task<IList<CategoryDTOs>> GetAllCategory()
         {
             try
             {
                 var allCategory = await uow.Repository<Category>().GetAll();
 
-                IEnumerable<CategoryDTOs> categoryDTOs = allCategory.Select(category => new CategoryDTOs
+                
+
+                IList<CategoryDTOs> categoryDTOs = allCategory.Select(category => new CategoryDTOs
                 {
                     CategoryId = category.CategoryId,
                     CategoryName = category.CategoryName,
-                });
+                }).ToList();
+
 
                 return categoryDTOs;
                 //var allCategory =await uow.Repository<Category>().GetAll();
@@ -53,9 +76,15 @@ namespace BLL.Services.Implementation
             }
         }
 
-        public Task<CategoryDTOs> GetCategoryById(int id)
+        public async Task<CategoryDTOs> GetCategoryById(int id)
         {
-            throw new NotImplementedException();
+            var category = await uow.Repository<Category>().GetById(id);
+            var categoryDTOs = new CategoryDTOs()
+            {
+                CategoryId = category.CategoryId,
+                CategoryName = category.CategoryName
+            };
+            return categoryDTOs;
         }
 
         public async Task<CategoryDTOs> SaveCategory(CategoryDTOs categoryDTOs)
@@ -65,24 +94,30 @@ namespace BLL.Services.Implementation
 
                 List<ProductDTOs> productDTOs = categoryDTOs.Products.ToList();
 
-                List<Product> productsList = new List<Product>();
-                foreach (var productDTO in productDTOs)
+                IEnumerable<Product> productLst = productDTOs.Select(product => new Product
                 {
-                    var products = new Product()
-                    {
-                        ProductName = productDTO.ProductName,
-                        Price = productDTO.Price,
-                        CategoryId = productDTO.CategoryId,
+                    ProductName = product.ProductName,
+                    CategoryId = product.CategoryId,
 
-                    };
-                    productsList.Add(products);
-                }
-               
+                });
+
+                List<Product> productList = productLst.ToList();
+
+                //IList<Product> productList = productDTOs.Select(product => new Product
+                //{
+                //    ProductName = product.ProductName,
+                //    Price = product.Price,
+                //    CategoryId = product.CategoryId,
+
+                //}).ToList();
+
+
+
+
                 var categoryAdd = new Category()
                 {
-                    CategoryId = categoryDTOs.CategoryId,
                     CategoryName = categoryDTOs.CategoryName,
-                    Products = productsList
+                    Products = productList,
 
                 };
 
@@ -100,5 +135,7 @@ namespace BLL.Services.Implementation
         {
             throw new NotImplementedException();
         }
+
+       
     }
 }
