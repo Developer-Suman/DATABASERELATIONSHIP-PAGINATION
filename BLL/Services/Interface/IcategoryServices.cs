@@ -9,11 +9,11 @@ namespace BLL.Services.Interface
 {
     public interface IcategoryServices
     {
-        Task<IEnumerable<CategoryDTOs>> GetAllCategory();
+        Task<IList<CategoryDTOs>> GetAllCategory();
         Task<CategoryDTOs> GetCategoryById(int id);
         Task<CategoryDTOs> SaveCategory(CategoryDTOs categoryDTOs);
         Task<CategoryDTOs> UpdateCategory(int CategoriesId, CategoryDTOs categoryDTOs);
-        Task<int> DeleteCategory(int CategoriesId);
+        Task<CategoryDTOs> DeleteCategory(int CategoriesId, CategoryDTOs categoryDTOs);
 
     }
 }

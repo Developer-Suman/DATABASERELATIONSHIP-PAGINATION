@@ -17,6 +17,8 @@ namespace BLL.Repository.Interface
         Task<TEntity> GetSingleIncluding(Expression<Func<TEntity, bool>> condition, params Expression<Func<TEntity, object>>[] includeProperties);
         Task<IEnumerable<TEntity>> GetConditional(Expression<Func<TEntity, bool>> predicate);
         Task<IEnumerable<TEntity>> GetAll();
+
+        //Task<IQueryable<TEntity>> GetAll();
         Task<IEnumerable<TEntity>> GetAllIncluding(params Expression<Func<TEntity, object>>[] includeProperties);
         IEnumerable<TEntity> GetWithShaping(params Expression<Func<TEntity, object>>[] includeProperties);
         Task<IEnumerable<TEntity>> GetConditionalIncluding(Expression<Func<TEntity, bool>> condition, params Expression<Func<TEntity, object>>[] includeProperties);

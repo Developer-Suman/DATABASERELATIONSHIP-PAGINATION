@@ -19,7 +19,8 @@ namespace DatabaseRelationship_Pagination.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View();
+            IList<CategoryDTOs> categoryList = await _categoryServices.GetAllCategory();
+            return View(categoryList);
         }
 
 
@@ -35,6 +36,35 @@ namespace DatabaseRelationship_Pagination.Controllers
            View(await _categoryServices.SaveCategory(categoryDTOs));
             return RedirectToAction("Index");
 
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Update()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Update(int CategoryId, CategoryDTOs categoryDTOs)
+        {
+            View(await _categoryServices.UpdateCategory(CategoryId, categoryDTOs));
+            return RedirectToAction("Index");
+
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int Id)
+        {
+            var category = await _categoryServices.GetCategoryById(Id);
+            return View(category);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int CategoryId, CategoryDTOs categoryDTOs)
+        {
+            View(await _categoryServices.DeleteCategory(CategoryId, categoryDTOs));
+            return RedirectToAction("Index");
         }
     }
 }

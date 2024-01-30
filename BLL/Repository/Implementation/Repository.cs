@@ -68,8 +68,14 @@ namespace BLL.Repository.Implementation
         }
         public async Task<IEnumerable<TEntity>> GetAll()
         {
-            return await _dbSet.ToListAsync();
+            return await _dbSet.AsNoTracking().ToListAsync();
         }
+
+        //public async Task<IQueryable<TEntity>> GetAll()
+        //{
+        //    var entities = await _dbSet.ToListAsync();
+        //    return entities.AsQueryable();
+        //}
         public async Task<IEnumerable<TEntity>> GetAllIncluding(params Expression<Func<TEntity, object>>[] includeProperties)
         {
             IQueryable<TEntity> query = _dbSet;
