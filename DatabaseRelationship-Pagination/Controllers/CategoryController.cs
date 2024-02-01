@@ -1,4 +1,5 @@
 ﻿using BLL.DTOs;
+using BLL.DTOs.Category;
 using BLL.Services.Interface;
 using DAL.DbContext;
 using DAL.Models;
@@ -19,8 +20,9 @@ namespace DatabaseRelationship_Pagination.Controllers
 
         public async Task<IActionResult> Index()
         {
-            IList<CategoryDTOs> categoryList = await _categoryServices.GetAllCategory();
-            return View(categoryList);
+            CategoryIndexDTOs categoryIndexDTOs = new CategoryIndexDTOs();
+            categoryIndexDTOs.CategoryListDTOs = await _categoryServices.GetAllCategory();
+            return View(categoryIndexDTOs);
         }
 
 
@@ -31,9 +33,9 @@ namespace DatabaseRelationship_Pagination.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CategoryDTOs categoryDTOs)
+        public async Task<IActionResult> Create(CategoryCreateDTOs categoryCreateDTOs)
         {
-           View(await _categoryServices.SaveCategory(categoryDTOs));
+           View(await _categoryServices.SaveCategory(categoryCreateDTOs));
             return RedirectToAction("Index");
 
         }
@@ -46,7 +48,7 @@ namespace DatabaseRelationship_Pagination.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Update(int CategoryId, CategoryDTOs categoryDTOs)
+        public async Task<IActionResult> Update(int CategoryId, CategoryUpdateDTOs categoryDTOs)
         {
             View(await _categoryServices.UpdateCategory(CategoryId, categoryDTOs));
             return RedirectToAction("Index");
@@ -61,7 +63,7 @@ namespace DatabaseRelationship_Pagination.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(int CategoryId, CategoryDTOs categoryDTOs)
+        public async Task<IActionResult> Delete(int CategoryId, CategoryDeleteDTOs categoryDTOs)
         {
             View(await _categoryServices.DeleteCategory(CategoryId, categoryDTOs));
             return RedirectToAction("Index");

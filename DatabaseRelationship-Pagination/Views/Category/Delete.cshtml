@@ -1,5 +1,6 @@
 ﻿@using BLL.DTOs
-@model CategoryDTOs
+@using BLL.DTOs.Category;
+@model CategoryIndexDTOs
 
 
 <form asp-action="Delete">
@@ -15,22 +16,22 @@
 
                 <div class="row">
                     <div class="col-md-3">
-                        @Html.DisplayNameFor(model=>model.CategoryId)
-                        <input type="hidden" asp-for="CategoryId" class="form-control" />
+                        @Html.DisplayNameFor(model=>model.CategoryDeleteDTOSs.CategoryId)
+                        <input type="hidden" asp-for="CategoryDeleteDTOSs.CategoryId" class="form-control" />
 
                     </div>
                     <div class="col-md-9">
-                        @Html.DisplayFor(model=>model.CategoryId)
-                        <input type="hidden" asp-for="CategoryName" class="form-control" />
+                        @Html.DisplayFor(model=>model.CategoryDeleteDTOSs.CategoryId)
+                        <input type="hidden" asp-for="CategoryDeleteDTOSs.CategoryName" class="form-control" />
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-3">
-                        @Html.DisplayNameFor(model=>model.CategoryName)
+                        @Html.DisplayNameFor(model=>model.CategoryDeleteDTOSs.CategoryName)
 
                     </div>
                     <div class="col-md-9">
-                        @Html.DisplayFor(model=>model.CategoryName)
+                        @Html.DisplayFor(model=>model.CategoryDeleteDTOSs.CategoryName)
                     </div>
                 </div>
     

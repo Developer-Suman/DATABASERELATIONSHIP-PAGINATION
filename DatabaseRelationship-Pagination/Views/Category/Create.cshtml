@@ -1,5 +1,6 @@
 ﻿@using BLL.DTOs;
-@model CategoryDTOs
+@using BLL.DTOs.Category;
+@model CategoryIndexDTOs
 @{
     ViewData["Title"] = "Create";
 }
@@ -31,8 +32,8 @@
                     
                         </div>
                         <div class="col-md-10">
-                            <label asp-for="CategoryName"></label>
-                            <input asp-for="CategoryName" class="form-control" />
+                            <label asp-for="CategoryCreateDTOs.CategoryName"></label>
+                            <input asp-for="CategoryCreateDTOs.CategoryName" class="form-control" />
                         </div>
 
                         <table id="productTable" class="table">
@@ -44,10 +45,10 @@
                             <tbody>
                                 <tr class="detailRow">
                                     <td>
-                                        <input type="text" name="Products[0].ProductName" class="form-control" required />
+                                        <input type="text" name="CategoryCreateDTOs.Products[0].ProductName" class="form-control" required />
                                     </td>
                                     <td>
-                                        <input type="text" name="Products[0].Price" class="form-control" required />
+                                        <input type="text" name="CategoryCreateDTOs.Products[0].Price" class="form-control" required />
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-danger removeRow">Remove</button>

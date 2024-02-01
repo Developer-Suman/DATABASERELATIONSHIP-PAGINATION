@@ -1,4 +1,5 @@
 ﻿using BLL.DTOs;
+using BLL.DTOs.Category;
 using BLL.Repository.Interface;
 using BLL.Services.Interface;
 using DAL.Models;
@@ -22,14 +23,14 @@ namespace BLL.Services.Implementation
             
         }
 
-        public async Task<CategoryDTOs> DeleteCategory(int CategoriesId, CategoryDTOs categoryDTOs)
+        public async Task<CategoryDeleteDTOs> DeleteCategory(int CategoriesId, CategoryDeleteDTOs categoryDeleteDTOs)
         {
             try
             {
                 var category = await uow.Repository<Category>().GetById(CategoriesId) ?? throw new Exception("Category not found");
                 uow.Repository<Category>().Delete(category);
                 await uow.SaveChangesAsync();
-                var categoryDTO = new CategoryDTOs()
+                var categoryDTO = new CategoryDeleteDTOs()
                 {
                     CategoryName = category.CategoryName
                 };
@@ -44,7 +45,7 @@ namespace BLL.Services.Implementation
             }
         }
 
-        public async Task<IList<CategoryDTOs>> GetAllCategory()
+        public async Task<IList<CategoryGetAllDTOs>> GetAllCategory()
         {
             try
             {
@@ -52,7 +53,7 @@ namespace BLL.Services.Implementation
 
                 
 
-                IList<CategoryDTOs> categoryDTOs = allCategory.Select(category => new CategoryDTOs
+                IList<CategoryGetAllDTOs> categoryDTOs = allCategory.Select(category => new CategoryGetAllDTOs
                 {
                     CategoryId = category.CategoryId,
                     CategoryName = category.CategoryName,
@@ -76,10 +77,10 @@ namespace BLL.Services.Implementation
             }
         }
 
-        public async Task<CategoryDTOs> GetCategoryById(int id)
+        public async Task<CategoryGetByIdDTOs> GetCategoryById(int id)
         {
             var category = await uow.Repository<Category>().GetById(id);
-            var categoryDTOs = new CategoryDTOs()
+            var categoryDTOs = new CategoryGetByIdDTOs()
             {
                 CategoryId = category.CategoryId,
                 CategoryName = category.CategoryName
@@ -87,43 +88,43 @@ namespace BLL.Services.Implementation
             return categoryDTOs;
         }
 
-        public async Task<CategoryDTOs> SaveCategory(CategoryDTOs categoryDTOs)
+        public async Task<CategoryCreateDTOs> SaveCategory(CategoryCreateDTOs categoryCreateDTOs)
         {
             try
             {
 
-                List<ProductDTOs> productDTOs = categoryDTOs.Products.ToList();
+                List<ProductDTOs> productDTOs = categoryCreateDTOs.Products.ToList();
 
-                IEnumerable<Product> productLst = productDTOs.Select(product => new Product
-                {
-                    ProductName = product.ProductName,
-                    CategoryId = product.CategoryId,
-
-                });
-
-                List<Product> productList = productLst.ToList();
-
-                //IList<Product> productList = productDTOs.Select(product => new Product
+                //IEnumerable<Product> productLst = productDTOs.Select(product => new Product
                 //{
                 //    ProductName = product.ProductName,
-                //    Price = product.Price,
                 //    CategoryId = product.CategoryId,
 
-                //}).ToList();
+                //});
+
+                //List<Product> productList = productLst.ToList();
+
+                IList<Product> productList = productDTOs.Select(product => new Product
+                {
+                    ProductName = product.ProductName,
+                    Price = product.Price,
+                    CategoryId = product.CategoryId,
+
+                }).ToList();
 
 
 
 
                 var categoryAdd = new Category()
                 {
-                    CategoryName = categoryDTOs.CategoryName,
+                    CategoryName = categoryCreateDTOs.CategoryName,
                     Products = productList,
 
                 };
 
                 await uow.Repository<Category>().Add(categoryAdd);
                 await uow.SaveChangesAsync();
-                return categoryDTOs;
+                return categoryCreateDTOs;
 
             }catch(Exception ex)
             {
@@ -131,7 +132,7 @@ namespace BLL.Services.Implementation
             }
         }
 
-        public Task<CategoryDTOs> UpdateCategory(int CategoriesId, CategoryDTOs categoryDTOs)
+        public Task<CategoryUpdateDTOs> UpdateCategory(int CategoriesId, CategoryUpdateDTOs categoryDTOs)
         {
             throw new NotImplementedException();
         }
