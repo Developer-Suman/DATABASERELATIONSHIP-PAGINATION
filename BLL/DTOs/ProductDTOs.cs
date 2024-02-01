@@ -1,4 +1,5 @@
-﻿using DAL.Models;
+﻿using BLL.DTOs.Category;
+using DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,6 @@ namespace BLL.DTOs
         public string ProductName { get; set; }
         public decimal Price { get; set; }
         public int CategoryId { get; set; }
-        public CategoryDTOs categoryDTos { get; set; }
+        public CategoryCreateDTOs categoryDTos { get; set; }
     }
 }

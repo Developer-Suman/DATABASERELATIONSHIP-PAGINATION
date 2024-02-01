@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BLL.DTOs
+namespace BLL.DTOs.Category
 {
-    public class CategoryDTOs
+    public class CategoryCreateDTOs
     {
-        public int CategoryId { get; set; }
-        public string CategoryName { get;set; }
+        public string CategoryName { get; set; }
         public IList<ProductDTOs> Products { get; set; }
     }
 }
