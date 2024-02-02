@@ -57,19 +57,31 @@ namespace BLL.Services.Implementation
         {
             try
             {
-                List<CategoryGetAllDTOs> categoriswithproduct = _context.Categories.Include(x => x.Products)
-                    .Select(x => new CategoryGetAllDTOs()
-                {
-                        CategoryName = x.CategoryName,
-                        CategoryId = x.CategoryId,
-                        Products = x.Products.Select(x => new ProductDTOs()
-                        {
-                            ProductName = x.ProductName,
-                            Price = x.Price,
 
-                        }).ToList()
 
-                }).ToList();
+                //List<CategoryGetAllDTOs> categoriswithproduct = _context.Categories.Include(x => x.Products)
+                //    .Select(x => new CategoryGetAllDTOs()
+                //{
+                //        CategoryName = x.CategoryName,
+                //        CategoryId = x.CategoryId,
+                //        Products = x.Products.Select(x => new ProductDTOs()
+                //        {
+                //            ProductName = x.ProductName,
+                //            Price = x.Price,
+
+                //        }).ToList()
+
+                //}).ToList();
+
+                List<CategoryGetAllDTOs> categoriswithproduct = _context.Categories.Include(x=>x.Products)
+                    .Select(category => new CategoryGetAllDTOs()
+                    {
+                        CategoryName = category.CategoryName,
+                        CategoryId = category.CategoryId,
+                        Products = category.Products.Select(x=>_mapper.Map<ProductGetAllDTOs>(x)).ToList()
+                    }).ToList();
+
+
 
                 return categoriswithproduct;
 
@@ -83,15 +95,23 @@ namespace BLL.Services.Implementation
         {
             try
             {
-                var category = await uow.Repository<Category>().GetAll();
-                List<CategoryGetAllDTOs> AllCategories= category.Select(x => new CategoryGetAllDTOs()
-                {
-                    CategoryId = x.CategoryId,
-                    CategoryName = x.CategoryName,
 
-                }).ToList();
+                List<CategoryGetAllDTOs> allCategories = _context.Categories
+                .Select(category => _mapper.Map<CategoryGetAllDTOs>(category))
+                .ToList();
 
-                return AllCategories;
+
+
+
+                //var category = await uow.Repository<Category>().GetAll();
+                //List<CategoryGetAllDTOs> AllCategories= category.Select(x => new CategoryGetAllDTOs()
+                //{
+                //    CategoryId = x.CategoryId,
+                //    CategoryName = x.CategoryName,
+
+                //}).ToList();
+
+                return allCategories;
 
             }
             catch(Exception ex)

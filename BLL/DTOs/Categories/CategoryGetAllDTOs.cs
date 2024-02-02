@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BLL.DTOs.Products;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,6 @@ namespace BLL.DTOs.Category
     { 
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
-        public IList<ProductDTOs> Products { get; set; }
+        public IList<ProductGetAllDTOs> Products { get; set; }
     }
 }

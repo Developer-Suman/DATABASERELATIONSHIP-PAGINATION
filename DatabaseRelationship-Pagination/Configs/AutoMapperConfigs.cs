@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BLL.DTOs.Category;
+using BLL.DTOs.Products;
 using DAL.Models;
 
 namespace DatabaseRelationship_Pagination.Configs
@@ -12,6 +13,7 @@ namespace DatabaseRelationship_Pagination.Configs
             #region category
 
             CreateMap<Category, CategoryGetAllDTOs>().ReverseMap();
+            CreateMap<Product, ProductGetAllDTOs>().ReverseMap();
             #endregion
 
         }
