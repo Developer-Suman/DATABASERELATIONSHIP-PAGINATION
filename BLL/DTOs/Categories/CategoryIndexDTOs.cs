@@ -1,4 +1,5 @@
 ﻿using BLL.DTOs.Category;
+using BLL.DTOs.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,8 @@ namespace BLL.DTOs.Categories
         public CategoryCreateDTOs CategoryCreateDTOs { get; set; }
         public CategoryGetAllDTOs CategoryGetAllDTOs { get; set; }
         public List<CategoryGetAllDTOs> CategoryListDTOs { get; set; }
+
+        public List<ProductGetAllDTOs> ProductGetAllDTOs { get; set; }
       
         public CategoryGetByIdDTOs CategoryGetByIdDTOs { get; set; }
       

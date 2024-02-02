@@ -22,7 +22,8 @@ namespace DatabaseRelationship_Pagination.Controllers
 
         [HttpGet]
         public async Task<IActionResult> Index()
-        {   
+        {
+            List<Product> testSelectMany = await _context.Categories.AsNoTracking().SelectMany(x => x.Products).ToListAsync();
             //var categoryWithProduct  = _context.Products.ToLookup(x => x.ProductId);
             CategoryIndexDTOs categoryIndexDTOs = new CategoryIndexDTOs();
             categoryIndexDTOs.CategoryListDTOs = await _categoryServices.GetAllCategory();
@@ -35,6 +36,14 @@ namespace DatabaseRelationship_Pagination.Controllers
         {
             CategoryIndexDTOs categoryIndexDTOs = new CategoryIndexDTOs();
             categoryIndexDTOs.CategoryListDTOs = await _categoryServices.GetAllCategoriesWithProducts();
+            return View(categoryIndexDTOs);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetProductFromCategories()
+        {
+            CategoryIndexDTOs categoryIndexDTOs = new CategoryIndexDTOs();
+            categoryIndexDTOs.ProductGetAllDTOs = await _categoryServices.GetProductFromCategories();
             return View(categoryIndexDTOs);
         }
 

@@ -1,7 +1,9 @@
+using AutoMapper;
 using BLL;
 using BLL.Repository.Implementation;
 using BLL.Repository.Interface;
 using DAL;
+using DatabaseRelationship_Pagination.Configs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,18 @@ builder.Services
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+//AutoMapperConfiguration
+var mappingConfig = new MapperConfiguration(mc =>
+{
+    mc.AddProfile(new MappingProfile());
+});
+
+IMapper mapper = mappingConfig.CreateMapper();
+builder.Services.AddSingleton(mapper);
+
+
+
 
 var app = builder.Build();
 

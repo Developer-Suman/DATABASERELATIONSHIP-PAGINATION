@@ -1,5 +1,7 @@
-﻿using BLL.DTOs;
+﻿using AutoMapper;
+using BLL.DTOs;
 using BLL.DTOs.Category;
+using BLL.DTOs.Products;
 using BLL.Repository.Interface;
 using BLL.Services.Interface;
 using DAL.DbContext;
@@ -19,11 +21,13 @@ namespace BLL.Services.Implementation
     {
         private readonly IUnitOfWorkTwo uow;
         private readonly ApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-        public CategoryServices(IUnitOfWorkTwo unitOfWork,ApplicationDbContext applicationDbContext)
+        public CategoryServices(IUnitOfWorkTwo unitOfWork,ApplicationDbContext applicationDbContext, IMapper mapper)
         {
             uow = unitOfWork;
             _context = applicationDbContext;
+            _mapper = mapper;
             
         }
 
@@ -106,6 +110,29 @@ namespace BLL.Services.Implementation
                 CategoryName = category.CategoryName
             };
             return categoryDTOs;
+        }
+
+        public async Task<List<ProductGetAllDTOs>> GetProductFromCategories()
+        {
+            try
+            {
+                List<ProductGetAllDTOs> productsByCategories = await _context.Categories.SelectMany(x => x.Products
+                .Select(x => new ProductGetAllDTOs()
+                {
+                    ProductId = x.ProductId,
+                    ProductName = x.ProductName,
+                    CategoryName = x.Category.CategoryName,
+                    Price = x.Price,
+
+                })).ToListAsync();
+
+                return productsByCategories;
+
+            }
+            catch(Exception ex) 
+            {
+                throw new Exception("An error occured while getting product from Category");
+             }
         }
 
         public async Task<CategoryCreateDTOs> SaveCategory(CategoryCreateDTOs categoryCreateDTOs)
