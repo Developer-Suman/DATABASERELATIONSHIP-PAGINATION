@@ -1,5 +1,6 @@
 ﻿using BLL.DTOs;
 using BLL.DTOs.Category;
+using BLL.DTOs.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace BLL.Services.Interface
     {
         Task<List<CategoryGetAllDTOs>> GetAllCategory();
         Task<List<CategoryGetAllDTOs>> GetAllCategoriesWithProducts();
+        Task<List<ProductGetAllDTOs>> GetProductFromCategories();
         Task<CategoryGetByIdDTOs> GetCategoryById(int id);
         Task<CategoryCreateDTOs> SaveCategory(CategoryCreateDTOs categoryDTOs);
         Task<CategoryUpdateDTOs> UpdateCategory(int CategoriesId, CategoryUpdateDTOs categoryUpdateDTOs);

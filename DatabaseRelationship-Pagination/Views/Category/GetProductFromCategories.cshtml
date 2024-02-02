@@ -1,0 +1,59 @@
+﻿@using BLL.DTOs;
+@using BLL.DTOs.Categories;
+@model CategoryIndexDTOs
+
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    th, td {
+        padding: 12px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+
+
+    .numeric {
+        text-align: center;
+    }
+
+    .center {
+        text-align: center;
+    }
+
+</style>
+<table>
+    <thead>
+        <tr>
+            <th>ProductId</th>
+            <th class="numeric">ProductName</th>
+            <th>Price</th>
+            <th>CategoryName</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.ProductGetAllDTOs.Count(); i++)
+        {
+            <tr>
+                <td>@Model.ProductGetAllDTOs[i].ProductId</td>
+                <td class="numeric">@Model.ProductGetAllDTOs[i].ProductName</td>
+                <td>@Model.ProductGetAllDTOs[i].Price</td>
+                <td>@Model.ProductGetAllDTOs[i].CategoryName</td>
+
+
+            </tr>
+
+        }
+
+
+    </tbody>
+
+</table>
