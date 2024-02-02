@@ -2,7 +2,9 @@
 using BLL.DTOs.Category;
 using BLL.Repository.Interface;
 using BLL.Services.Interface;
+using DAL.DbContext;
 using DAL.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -16,10 +18,12 @@ namespace BLL.Services.Implementation
     public class CategoryServices : IcategoryServices
     {
         private readonly IUnitOfWorkTwo uow;
+        private readonly ApplicationDbContext _context;
 
-        public CategoryServices(IUnitOfWorkTwo unitOfWork)
+        public CategoryServices(IUnitOfWorkTwo unitOfWork,ApplicationDbContext applicationDbContext)
         {
             uow = unitOfWork;
+            _context = applicationDbContext;
             
         }
 
@@ -45,37 +49,53 @@ namespace BLL.Services.Implementation
             }
         }
 
-        public async Task<IList<CategoryGetAllDTOs>> GetAllCategory()
+        public async Task<List<CategoryGetAllDTOs>> GetAllCategoriesWithProducts()
         {
             try
             {
-                var allCategory = await uow.Repository<Category>().GetAll();
-
-                
-
-                IList<CategoryGetAllDTOs> categoryDTOs = allCategory.Select(category => new CategoryGetAllDTOs
+                List<CategoryGetAllDTOs> categoriswithproduct = _context.Categories.Include(x => x.Products)
+                    .Select(x => new CategoryGetAllDTOs()
                 {
-                    CategoryId = category.CategoryId,
-                    CategoryName = category.CategoryName,
+                        CategoryName = x.CategoryName,
+                        CategoryId = x.CategoryId,
+                        Products = x.Products.Select(x => new ProductDTOs()
+                        {
+                            ProductName = x.ProductName,
+                            Price = x.Price,
+
+                        }).ToList()
+
                 }).ToList();
 
+                return categoriswithproduct;
 
-                return categoryDTOs;
-                //var allCategory =await uow.Repository<Category>().GetAll();
-                //List<CategoryDTOs> categoryDTOs = allCategory.Select(category => new CategoryDTOs
-                //{
-                //    CategoryId = category.CategoryId,
-                //    CategoryName = category.CategoryName,
-                //}).ToList();
+            }catch(Exception ex)
+            {
+                throw new Exception("An error occured while getting all category with products");
+            }
+        }
 
-                //return categoryDTOs;
+        public async Task<List<CategoryGetAllDTOs>> GetAllCategory()
+        {
+            try
+            {
+                var category = await uow.Repository<Category>().GetAll();
+                List<CategoryGetAllDTOs> AllCategories= category.Select(x => new CategoryGetAllDTOs()
+                {
+                    CategoryId = x.CategoryId,
+                    CategoryName = x.CategoryName,
+
+                }).ToList();
+
+                return AllCategories;
 
             }
             catch(Exception ex)
             {
-                throw new Exception("An error occured while getting all category");
+                throw new Exception("An eror occured while fetch all the category");
             }
         }
+
 
         public async Task<CategoryGetByIdDTOs> GetCategoryById(int id)
         {
