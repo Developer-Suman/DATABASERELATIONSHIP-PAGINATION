@@ -1,27 +1,40 @@
 ﻿using BLL.DTOs;
+using BLL.DTOs.Categories;
 using BLL.DTOs.Category;
 using BLL.Services.Interface;
 using DAL.DbContext;
 using DAL.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace DatabaseRelationship_Pagination.Controllers
 {
     public class CategoryController : Controller
     {
        private readonly IcategoryServices _categoryServices;
+        private readonly ApplicationDbContext _context;
 
-        public CategoryController(IcategoryServices icategoryServices)
+        public CategoryController(IcategoryServices icategoryServices, ApplicationDbContext context)
         {
-           _categoryServices = icategoryServices;
-            
+            _categoryServices = icategoryServices;
+            _context = context;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Index()
+        {   
+            //var categoryWithProduct  = _context.Products.ToLookup(x => x.ProductId);
+            CategoryIndexDTOs categoryIndexDTOs = new CategoryIndexDTOs();
+            categoryIndexDTOs.CategoryListDTOs = await _categoryServices.GetAllCategory();
+            return View(categoryIndexDTOs);
         }
 
 
-        public async Task<IActionResult> Index()
+        [HttpGet]
+        public async Task<IActionResult> GetCategoryWithProduct()
         {
             CategoryIndexDTOs categoryIndexDTOs = new CategoryIndexDTOs();
-            categoryIndexDTOs.CategoryListDTOs = await _categoryServices.GetAllCategory();
+            categoryIndexDTOs.CategoryListDTOs = await _categoryServices.GetAllCategoriesWithProducts();
             return View(categoryIndexDTOs);
         }
 

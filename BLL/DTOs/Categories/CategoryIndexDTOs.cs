@@ -1,10 +1,11 @@
-﻿using System;
+﻿using BLL.DTOs.Category;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BLL.DTOs.Category
+namespace BLL.DTOs.Categories
 {
     public class CategoryIndexDTOs
     {
@@ -12,7 +13,8 @@ namespace BLL.DTOs.Category
         public CategoryUpdateDTOs CategoryUpdateDTOs { get; set; }
         public CategoryCreateDTOs CategoryCreateDTOs { get; set; }
         public CategoryGetAllDTOs CategoryGetAllDTOs { get; set; }
-        public IList<CategoryGetAllDTOs> CategoryListDTOs { get; set; }
+        public List<CategoryGetAllDTOs> CategoryListDTOs { get; set; }
+      
         public CategoryGetByIdDTOs CategoryGetByIdDTOs { get; set; }
       
     }

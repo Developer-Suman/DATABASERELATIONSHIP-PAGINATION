@@ -10,7 +10,8 @@ namespace BLL.Services.Interface
 {
     public interface IcategoryServices
     {
-        Task<IList<CategoryGetAllDTOs>> GetAllCategory();
+        Task<List<CategoryGetAllDTOs>> GetAllCategory();
+        Task<List<CategoryGetAllDTOs>> GetAllCategoriesWithProducts();
         Task<CategoryGetByIdDTOs> GetCategoryById(int id);
         Task<CategoryCreateDTOs> SaveCategory(CategoryCreateDTOs categoryDTOs);
         Task<CategoryUpdateDTOs> UpdateCategory(int CategoriesId, CategoryUpdateDTOs categoryUpdateDTOs);
