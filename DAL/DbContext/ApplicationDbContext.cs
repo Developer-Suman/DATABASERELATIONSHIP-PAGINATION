@@ -15,5 +15,6 @@ namespace DAL.DbContext
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Feedback> Feedbacks { get; set; }
     }
 }

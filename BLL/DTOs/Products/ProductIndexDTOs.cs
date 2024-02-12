@@ -10,6 +10,7 @@ namespace BLL.DTOs.Products
     {
         public ProductCreateDTOs productCreateDTOs { get; set; }
         public List<ProductGetDTOs> productGetDTOs { get; set;}
+        public ProductGetDTOs ProductGetDTOs { get; set;}
         public ProductUpdateDTOs productUpdateDTOs { get; set; }
     }
 }
