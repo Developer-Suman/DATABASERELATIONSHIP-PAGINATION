@@ -1,4 +1,6 @@
-﻿using BLL.DTOs;
+﻿using AutoMapper;
+using BLL.DTOs;
+using BLL.DTOs.Products;
 using BLL.Repository.Interface;
 using BLL.Services.Interface;
 using DAL.Models;
@@ -13,9 +15,12 @@ namespace BLL.Services.Implementation
     public class ProductServices : IProductServices
     {
         private readonly IUnitOfWorkTwo uow;
+        private readonly IMapper _mapper;
+       
 
-        public ProductServices(IUnitOfWorkTwo unitOfWork)
+        public ProductServices(IUnitOfWorkTwo unitOfWork, IMapper mapper)
         {
+            _mapper = mapper;
             uow = unitOfWork;
             
         }
@@ -24,17 +29,19 @@ namespace BLL.Services.Implementation
             throw new NotImplementedException();
         }
 
-        public async Task<List<ProductDTOs>> GetAllProduct()
+        public async Task<List<ProductGetDTOs>> GetAllProduct()
         {
             try
             {
                 var AllProducts = await uow.Repository<Product>().GetAll();
+                                       
 
-                List<ProductDTOs> products = AllProducts.Select(product => new ProductDTOs
+                List<ProductGetDTOs> products = AllProducts.Select(product => new ProductGetDTOs
                 {
                     ProductName = product.ProductName,
                     ProductId = product.ProductId,
                     Price = product.Price,
+                    //CategoryName = product.Category.CategoryName
 
                 }).ToList();
 
@@ -47,18 +54,30 @@ namespace BLL.Services.Implementation
             }
         }
 
-        public Task<ProductDTOs> GetProductById(int id)
+        public async Task<ProductGetDTOs> GetProductById(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var product = await uow.Repository<Product>().GetById(id);
+                if(product == null)
+                {
+                    throw new Exception("Product contains null");
+                }
+                var productDTO = _mapper.Map<ProductGetDTOs>(product);
+                return productDTO;
+
+            }catch (Exception ex)
+            {
+                throw new Exception("An error occured while getting Product by Id", ex);
+            }
         }
 
-        public async Task<ProductDTOs> SaveProduct(ProductDTOs productDTOs)
+        public async Task<ProductGetDTOs> SaveProduct(ProductCreateDTOs productDTOs)
         {
             try
             {
                 var productAdd = new Product()
                 {
-                    ProductId = productDTOs.ProductId,
                     Price = productDTOs.Price,
                     ProductName = productDTOs.ProductName,
                     CategoryId = productDTOs.CategoryId
@@ -66,9 +85,8 @@ namespace BLL.Services.Implementation
 
                 };
 
-                var productshow = new ProductDTOs()
+                var productshow = new ProductGetDTOs()
                 {
-                    ProductId = productDTOs.ProductId,
                     Price = productDTOs.Price,
                     ProductName = productDTOs.ProductName,
                     //CategoryId = productDTOs.CategoryId,
@@ -86,7 +104,7 @@ namespace BLL.Services.Implementation
             }
         }
 
-        public Task<ProductDTOs> UpdateProduct(int ProductsId, ProductDTOs productDTOs)
+        public Task<ProductGetDTOs> UpdateProduct(int ProductsId, ProductUpdateDTOs productDTOs)
         {
             throw new NotImplementedException();
         }

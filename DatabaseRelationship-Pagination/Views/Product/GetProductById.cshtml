@@ -1,0 +1,51 @@
+﻿@using BLL.DTOs;
+@using BLL.DTOs.Products;
+@model ProductIndexDTOs
+
+<div class="add-form">
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-7 ">
+                <div style="background-color:#2BA9AF;">
+                    <h1 class="update-header">Add Your Product</h1>
+                </div>
+                <form method="Post" asp-action="GetProductById" asp-controller="Product">
+                    <div class="row">
+                        <div class="col-md-2">
+
+                        </div>
+                        <div class="col-md-10">
+                            <label asp-for="ProductGetDTOs.ProductName"></label>
+                            <input asp-for="ProductGetDTOs.ProductName" class="form-control" />
+                  
+          
+                        </div>
+                    </div>
+
+
+
+                    <div class="button-part mt-4">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <input type="submit" value="Edit Product" class="btn btn-primary" />
+
+                            </div>
+                            <div class="col-md-9">
+                                <a asp-action="Index" asp-controller="Journal" class="btn btn-danger">BACK TO ADMIN</a>
+
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </form>
+            </div>
+            <div class="col-md-3">
+            </div>
+        </div>
+    </div>
+</div>

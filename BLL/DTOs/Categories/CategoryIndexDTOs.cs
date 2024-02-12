@@ -16,7 +16,7 @@ namespace BLL.DTOs.Categories
         public CategoryGetAllDTOs CategoryGetAllDTOs { get; set; }
         public List<CategoryGetAllDTOs> CategoryListDTOs { get; set; }
 
-        public List<ProductGetAllDTOs> ProductGetAllDTOs { get; set; }
+        public List<ProductGetDTOs> ProductGetAllDTOs { get; set; }
       
         public CategoryGetByIdDTOs CategoryGetByIdDTOs { get; set; }
       
