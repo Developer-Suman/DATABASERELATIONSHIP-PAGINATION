@@ -1,6 +1,7 @@
 ﻿
 using BLL.DTOs;
 using BLL.DTOs.Category;
+using BLL.DTOs.Products;
 using BLL.Services.Interface;
 using DAL.DbContext;
 using DAL.Models;
@@ -26,6 +27,17 @@ namespace DatabaseRelationship_Pagination.Controllers
             
             return View();
         }
+       
+       
+
+        public async Task<IActionResult> GetAllProducts()
+        {
+            ProductIndexDTOs productIndexDTOs = new ProductIndexDTOs();
+            productIndexDTOs.productGetDTOs = await _productServices.GetAllProduct();
+
+            return View(productIndexDTOs);
+
+        }
 
         public async Task<IActionResult> Create()
         {
@@ -37,10 +49,18 @@ namespace DatabaseRelationship_Pagination.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create(ProductDTOs productViewModel)
+        public async Task<IActionResult> Create(ProductCreateDTOs productViewModel)
         {
             View(await _productServices.SaveProduct(productViewModel));
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetProductById(int Id)
+        {
+            ProductIndexDTOs productIndexDTOs = new ProductIndexDTOs();
+            productIndexDTOs.ProductGetDTOs = await _productServices.GetProductById(Id);
+            return View(productIndexDTOs);
         }
     }
 }

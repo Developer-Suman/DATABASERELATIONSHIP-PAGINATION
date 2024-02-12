@@ -78,7 +78,7 @@ namespace BLL.Services.Implementation
                     {
                         CategoryName = category.CategoryName,
                         CategoryId = category.CategoryId,
-                        Products = category.Products.Select(x=>_mapper.Map<ProductGetAllDTOs>(x)).ToList()
+                        Products = category.Products.Select(x=>_mapper.Map<ProductGetDTOs>(x)).ToList()
                     }).ToList();
 
 
@@ -132,12 +132,12 @@ namespace BLL.Services.Implementation
             return categoryDTOs;
         }
 
-        public async Task<List<ProductGetAllDTOs>> GetProductFromCategories()
+        public async Task<List<ProductGetDTOs>> GetProductFromCategories()
         {
             try
             {
-                List<ProductGetAllDTOs> productsByCategories = await _context.Categories.SelectMany(x => x.Products
-                .Select(x => new ProductGetAllDTOs()
+                List<ProductGetDTOs> productsByCategories = await _context.Categories.SelectMany(x => x.Products
+                .Select(x => new ProductGetDTOs()
                 {
                     ProductId = x.ProductId,
                     ProductName = x.ProductName,
@@ -160,7 +160,7 @@ namespace BLL.Services.Implementation
             try
             {
 
-                List<ProductDTOs> productDTOs = categoryCreateDTOs.Products.ToList();
+                List<ProductGetDTOs> productDTOs = categoryCreateDTOs.Products.ToList();
 
                 //IEnumerable<Product> productLst = productDTOs.Select(product => new Product
                 //{

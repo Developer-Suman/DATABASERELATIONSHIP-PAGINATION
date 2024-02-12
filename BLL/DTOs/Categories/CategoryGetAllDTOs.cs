@@ -11,6 +11,6 @@ namespace BLL.DTOs.Category
     { 
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
-        public IList<ProductGetAllDTOs> Products { get; set; }
+        public IList<ProductGetDTOs> Products { get; set; }
     }
 }
