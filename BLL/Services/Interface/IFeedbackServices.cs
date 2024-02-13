@@ -12,8 +12,8 @@ namespace BLL.Services.Interface
         Task<FeedbackGetDTOs> CreateFeedback(FeedbackCreateDTOs feedbackCreateDTOs);
         Task<List<FeedbackGetDTOs>> GetAllFeedbacks();
         Task<FeedbackGetDTOs> GetFeedbacksById(int FeedbackId);
-        Task<FeedbackGetDTOs> UpdateFeedback(int FeedbackId, FeedbackUpdateDTOs feedbackUpdateDTOs);
-        Task<int> DeleteFeedback(int FeedbackId);
+        Task<FeedbackGetDTOs> UpdateFeedback(FeedbackUpdateDTOs feedbackUpdateDTOs);
+        Task<bool> DeleteFeedback(int FeedbackId);
 
     }
 }
