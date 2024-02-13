@@ -3,7 +3,9 @@ using BLL.DTOs;
 using BLL.DTOs.Products;
 using BLL.Repository.Interface;
 using BLL.Services.Interface;
+using DAL.DbContext;
 using DAL.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,12 +18,13 @@ namespace BLL.Services.Implementation
     {
         private readonly IUnitOfWorkTwo uow;
         private readonly IMapper _mapper;
-       
+       private readonly ApplicationDbContext _context;
 
-        public ProductServices(IUnitOfWorkTwo unitOfWork, IMapper mapper)
+        public ProductServices(IUnitOfWorkTwo unitOfWork, IMapper mapper, ApplicationDbContext applicationDbContext)
         {
             _mapper = mapper;
             uow = unitOfWork;
+            _context = applicationDbContext;
             
         }
         public Task<int> DeleteProduct(int ProductsId)
@@ -33,7 +36,7 @@ namespace BLL.Services.Implementation
         {
             try
             {
-                var AllProducts = await uow.Repository<Product>().GetAll();
+                var AllProducts = await _context.Products.AsNoTracking().Include(x=>x.Category).ToListAsync();
                                        
 
                 List<ProductGetDTOs> products = AllProducts.Select(product => new ProductGetDTOs
@@ -41,7 +44,7 @@ namespace BLL.Services.Implementation
                     ProductName = product.ProductName,
                     ProductId = product.ProductId,
                     Price = product.Price,
-                    //CategoryName = product.Category.CategoryName
+                    CategoryName = product.Category.CategoryName
 
                 }).ToList();
 
