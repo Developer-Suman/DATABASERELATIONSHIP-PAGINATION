@@ -19,6 +19,7 @@ namespace BLL
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IProductServices, ProductServices>();
             services.AddScoped<IcategoryServices, CategoryServices>();
+            services.AddScoped<IFeedbackServices, FeedbackServices>();
 
 
             return services;

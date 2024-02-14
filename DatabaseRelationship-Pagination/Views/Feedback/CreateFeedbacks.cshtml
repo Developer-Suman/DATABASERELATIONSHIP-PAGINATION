@@ -1,0 +1,80 @@
+﻿@using BLL.DTOs;
+@using BLL.DTOs.Feedback;
+@model FeedbackGetDTOs
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+<div class="add-form">
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-7 ">
+                <div style="background-color:#2BA9AF;">
+                    <h1 class="update-header">Add Your Feedback</h1>
+                </div>
+                <form method="Post" enctype="multipart/form-data" asp-action="CreateFeedbacks" asp-controller="Feedback">
+                    <div class="row">
+               
+                        <div class="col-md-10">
+                            @Html.DropDownListFor(x=>x.ProductId, (SelectList)ViewBag.Feedbacks, "Select Feedback", new {@class="form-control"})
+
+                            <label asp-for="FeedbackName"></label>
+                            <input asp-for="FeedbackName" class="form-control" />
+
+                            
+                        </div>
+
+                        
+                    </div>
+
+
+
+                    <div class="button-part mt-4">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <input type="submit" value="ADD FEEDBACK" class="btn btn-primary" />
+
+                            </div>
+                            <div class="col-md-9">
+                                <a asp-action="Index" asp-controller="Journal" class="btn btn-danger">BACK TO ADMIN</a>
+
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </form>
+            </div>
+            <div class="col-md-3">
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        //Add Row
+        $('#addRow').click(function () {
+            var rowCount = $('#productTable tbody tr').length;
+            var newRow = $('.detailRow').first().clone();
+            newRow.find('input').val('');
+            newRow.find('input').attr('name', 'Products[' + rowCount + '].ProductName');
+            newRow.appendTo($('#productTable tbody'));
+        });
+
+        $(document).on('click', '.removeRow', function () {
+            if ($('#productTable tbody tr').length > 1) {
+                $(this).closest('tr').remove();
+            }
+        });
+    });
+</script>
+
+
+
