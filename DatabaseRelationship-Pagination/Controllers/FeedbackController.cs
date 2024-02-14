@@ -45,5 +45,21 @@ namespace DatabaseRelationship_Pagination.Controllers
                 throw new Exception("An error occured when we create Feedbacks");
             }
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllFeedback()
+        {
+            try
+            {
+                FeedbackIndexDTOs feedbackIndexDTOs = new FeedbackIndexDTOs();
+                feedbackIndexDTOs.FeedbackListDTOs = await _feedbackServices.GetAllFeedbacks();
+                return View(feedbackIndexDTOs);
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occured when we fetch all feedback", ex);
+            }
+        }
     }
 }

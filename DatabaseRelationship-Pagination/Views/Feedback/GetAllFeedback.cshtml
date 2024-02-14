@@ -1,0 +1,71 @@
+﻿@using BLL.DTOs;
+@using BLL.DTOs.Feedback;
+@model FeedbackIndexDTOs
+
+
+<h12>Successfully Added Product</h12>
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    th, td {
+        padding: 12px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+
+
+    .numeric {
+        text-align: center;
+    }
+
+    .center {
+        text-align: center;
+    }
+
+</style>
+<table>
+    <thead>
+        <tr>
+            <th>FeedbackId</th>
+            <th class="numeric">FeedbackContent</th>
+            <th class="numeric">ProductName</th>
+
+
+  
+
+            <th class="numeric">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.FeedbackListDTOs.Count(); i++)
+        {
+            <tr>
+                <td>@Model.FeedbackListDTOs[i].FeedbackId</td>
+                <td class="numeric">@Model.FeedbackListDTOs[i].FeedbackName</td>
+                <td class="numeric">@Model.FeedbackListDTOs[i].Product.ProductName</td>
+            
+
+
+                <td class="numeric currency">
+                    <a asp-action="Update" asp-controller="Product" asp-route-id="@Model.FeedbackListDTOs[i].ProductId"> <i class="fa-solid fa-pen-to-square"></i></a>
+                    <a asp-action="Delete" asp-controller="Product" asp-route-id="@Model.FeedbackListDTOs[i].ProductId"> <i class="fa-sharp fa-solid fa-trash"></i></a>
+                </td>
+
+            </tr>
+
+        }
+
+
+    </tbody>
+
+</table>
+
