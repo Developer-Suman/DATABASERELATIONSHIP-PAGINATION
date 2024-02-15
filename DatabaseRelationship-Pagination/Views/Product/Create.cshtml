@@ -1,12 +1,8 @@
-﻿@using BLL.DTOs;
-@using BLL.DTOs.Products;
+﻿
 @model ProductGetDTOs
-
-
 @{
     ViewData["Title"] = "Create";
 }
-
 
 <div class="add-form">
     <div class="container mt-5">
@@ -14,7 +10,7 @@
             <div class="col-md-2">
             </div>
             <div class="col-md-7 ">
-                <div style="background-color:#2BA9AF;">
+                <div class="Header-Name">
                     <h1 class="update-header">Add Your Product</h1>
                 </div>
                 <form method="Post" enctype="multipart/form-data" asp-action="Create" asp-controller="Product">
@@ -68,5 +64,9 @@
         </div>
     </div>
 </div>
+
+@section Scripts{
+    <partial name="_CustomCssAndJavascript"/>
+}
 
 
