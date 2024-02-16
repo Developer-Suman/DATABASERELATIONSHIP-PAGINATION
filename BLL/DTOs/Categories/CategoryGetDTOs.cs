@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BLL.DTOs.Category
+namespace BLL.DTOs.Categories
 {
-    public class CategoryGetByIdDTOs
+    public class CategoryGetDTOs
     {
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }

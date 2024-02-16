@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BLL.DTOs.Categories;
 using BLL.DTOs.Category;
 using BLL.DTOs.Feedback;
 using BLL.DTOs.Products;
@@ -13,7 +14,9 @@ namespace DatabaseRelationship_Pagination.Configs
         {
             #region category
 
-            CreateMap<Category, CategoryGetAllDTOs>().ReverseMap();
+            CreateMap<Category, CategoryGetDTOs>().ReverseMap();
+            CreateMap<Category, CategoryUpdateDTOs>().ReverseMap();
+            CreateMap<Category, CategoryGetDTOs>().ReverseMap();
 
             #endregion
 

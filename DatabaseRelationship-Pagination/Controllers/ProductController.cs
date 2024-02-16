@@ -1,5 +1,6 @@
 ﻿
 using BLL.DTOs;
+using BLL.DTOs.Categories;
 using BLL.DTOs.Category;
 using BLL.DTOs.Products;
 using BLL.Services.Interface;
@@ -41,7 +42,7 @@ namespace DatabaseRelationship_Pagination.Controllers
 
         public async Task<IActionResult> Create()
         {
-            IEnumerable<CategoryGetAllDTOs> category = await _categoryServices.GetAllCategory();
+            IEnumerable<CategoryGetDTOs> category = await _categoryServices.GetAllCategory();
 
 
             ViewBag.Category = new SelectList(category, "CategoryId", "CategoryName");
