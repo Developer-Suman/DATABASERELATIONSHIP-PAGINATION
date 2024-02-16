@@ -63,32 +63,50 @@ namespace DatabaseRelationship_Pagination.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Update()
+        public async Task<IActionResult> Update(int Id)
         {
-            return View();
+            CategoryGetDTOs categoryGetDTOs= await _categoryServices.GetCategoryById(Id);
+            return PartialView(categoryGetDTOs);
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> Update(int CategoryId, CategoryUpdateDTOs categoryDTOs)
+        public async Task<IActionResult> Update(CategoryUpdateDTOs categoryDTOs)
         {
-            View(await _categoryServices.UpdateCategory(CategoryId, categoryDTOs));
-            return RedirectToAction("Index");
+            try
+            {
+                await _categoryServices.UpdateCategory(categoryDTOs);
+                return Json(true);
+
+            }
+            catch(Exception ex)
+            {
+                return Json(false);
+
+            }
+       
 
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Delete(int Id)
-        {
-            var category = await _categoryServices.GetCategoryById(Id);
-            return View(category);
-        }
+       
 
         [HttpPost]
-        public async Task<IActionResult> Delete(int CategoryId, CategoryDeleteDTOs categoryDTOs)
+        public async Task<IActionResult> Delete(int CategoryId)
         {
-            View(await _categoryServices.DeleteCategory(CategoryId, categoryDTOs));
-            return RedirectToAction("Index");
+            try
+            {
+                var deleteId = await _categoryServices.DeleteCategory(CategoryId);
+                if (deleteId == null)
+                {
+                    throw new Exception("Delete Item is not Found");
+                }
+                return Json(true);
+
+            }catch(Exception ex)
+            {
+                throw new Exception("An error occured while Deleting Category");
+            }
+       
         }
     }
 }

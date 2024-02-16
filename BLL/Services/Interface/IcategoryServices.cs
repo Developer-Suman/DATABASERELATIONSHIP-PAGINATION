@@ -1,4 +1,5 @@
 ﻿using BLL.DTOs;
+using BLL.DTOs.Categories;
 using BLL.DTOs.Category;
 using BLL.DTOs.Products;
 using System;
@@ -11,13 +12,13 @@ namespace BLL.Services.Interface
 {
     public interface IcategoryServices
     {
-        Task<List<CategoryGetAllDTOs>> GetAllCategory();
-        Task<List<CategoryGetAllDTOs>> GetAllCategoriesWithProducts();
+        Task<List<CategoryGetDTOs>> GetAllCategory();
+        Task<List<CategoryGetDTOs>> GetAllCategoriesWithProducts();
         Task<List<ProductGetDTOs>> GetProductFromCategories();
-        Task<CategoryGetByIdDTOs> GetCategoryById(int id);
-        Task<CategoryCreateDTOs> SaveCategory(CategoryCreateDTOs categoryDTOs);
-        Task<CategoryUpdateDTOs> UpdateCategory(int CategoriesId, CategoryUpdateDTOs categoryUpdateDTOs);
-        Task<CategoryDeleteDTOs> DeleteCategory(int CategoriesId, CategoryDeleteDTOs categoryDTOs);
+        Task<CategoryGetDTOs> GetCategoryById(int id);
+        Task<CategoryGetDTOs> SaveCategory(CategoryCreateDTOs categoryDTOs);
+        Task<CategoryGetDTOs> UpdateCategory(CategoryUpdateDTOs categoryUpdateDTOs);
+        Task<int?> DeleteCategory(int CategoriesId);
 
     }
 }

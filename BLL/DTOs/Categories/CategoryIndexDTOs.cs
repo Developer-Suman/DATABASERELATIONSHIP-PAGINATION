@@ -10,15 +10,14 @@ namespace BLL.DTOs.Categories
 {
     public class CategoryIndexDTOs
     {
-        public CategoryDeleteDTOs CategoryDeleteDTOSs { get; set; }
         public CategoryUpdateDTOs CategoryUpdateDTOs { get; set; }
         public CategoryCreateDTOs CategoryCreateDTOs { get; set; }
-        public CategoryGetAllDTOs CategoryGetAllDTOs { get; set; }
-        public List<CategoryGetAllDTOs> CategoryListDTOs { get; set; }
+       
+        public List<CategoryGetDTOs> CategoryListDTOs { get; set; }
 
         public List<ProductGetDTOs> ProductGetAllDTOs { get; set; }
       
-        public CategoryGetByIdDTOs CategoryGetByIdDTOs { get; set; }
+
       
     }
 }

@@ -1,61 +1,24 @@
-﻿@using BLL.DTOs
-@using BLL.DTOs.Categories;
-@model CategoryIndexDTOs
+﻿@model CategoryGetDTOs
 
+@{
+    ViewData["Title"] = "Delete";
+}
 
-<form asp-action="Delete">
-    <div class="container mt-4">
-        <div class="row">
-            <div class="col-md-2">
-            </div>
-            <div class="col-md-8">
-                <div style="background-color:#2BA9AF;">
-                    <h1 class="update-header">Are You Sure want to delete???</h1>
-                </div>
+<h1>Delete</h1>
 
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>DepartmentModel</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CategoryName)
+        </dt>
+    </dl>
 
-                <div class="row">
-                    <div class="col-md-3">
-                        @Html.DisplayNameFor(model=>model.CategoryDeleteDTOSs.CategoryId)
-                        <input type="hidden" asp-for="CategoryDeleteDTOSs.CategoryId" class="form-control" />
-
-                    </div>
-                    <div class="col-md-9">
-                        @Html.DisplayFor(model=>model.CategoryDeleteDTOSs.CategoryId)
-                        <input type="hidden" asp-for="CategoryDeleteDTOSs.CategoryName" class="form-control" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3">
-                        @Html.DisplayNameFor(model=>model.CategoryDeleteDTOSs.CategoryName)
-
-                    </div>
-                    <div class="col-md-9">
-                        @Html.DisplayFor(model=>model.CategoryDeleteDTOSs.CategoryName)
-                    </div>
-                </div>
-    
-
-                <div class="row mt-5">
-                    <div class="col-md-2">
-                        <input type="submit" value="CONFIRM" class="btn btn-primary" />
-
-                    </div>
-                    <div class="col-md-9">
-                        <a asp-action="Index" class="btn btn-danger">BACK TO ADMIN</a>
-
-                    </div>
-                </div>
-
-
-
-
-            </div>
-            <div class="col-md-2">
-            </div>
-        </div>
-    </div>
-</form>
-
-
-
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="CategoryId" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>
