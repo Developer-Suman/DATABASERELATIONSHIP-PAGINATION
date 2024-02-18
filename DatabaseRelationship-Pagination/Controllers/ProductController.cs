@@ -63,5 +63,48 @@ namespace DatabaseRelationship_Pagination.Controllers
             productIndexDTOs.ProductGetDTOs = await _productServices.GetProductById(Id);
             return View(productIndexDTOs);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> UpdateProducts(int Id)
+        {
+            ProductGetDTOs productgetDTOs = await _productServices.GetProductById(Id);
+            return PartialView(productgetDTOs);
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateProducts(ProductUpdateDTOs productUpdateDTOs)
+        {
+            try
+            {
+                var product = await _productServices.UpdateProduct(productUpdateDTOs);
+                return Json(true);
+
+            }catch(Exception ex)
+            {
+                return Json(false);
+
+            }
+
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteProduct(int productId)
+        {
+            try
+            {
+                var deleteProduct = await _productServices.DeleteProduct(productId);
+                if(deleteProduct == null)
+                {
+                    throw new Exception("Deleted Item is not found");
+                }
+                return Json(true);
+
+            }catch(Exception ex)
+            {
+                throw new Exception("An error occured while Deleting");
+            }
+        }
     }
 }

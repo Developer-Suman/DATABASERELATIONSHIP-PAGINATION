@@ -22,6 +22,9 @@ namespace DatabaseRelationship_Pagination.Configs
 
             #region Product
             CreateMap<Product, ProductGetDTOs>().ReverseMap();
+            CreateMap<Product, ProductUpdateDTOs>().ReverseMap();
+            CreateMap<Product, ProductCreateDTOs>().ReverseMap();
+
             #endregion
 
             CreateMap<Feedback, FeedbackGetDTOs>().ReverseMap();

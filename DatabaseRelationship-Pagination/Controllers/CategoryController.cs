@@ -84,7 +84,6 @@ namespace DatabaseRelationship_Pagination.Controllers
                 return Json(false);
 
             }
-       
 
         }
 

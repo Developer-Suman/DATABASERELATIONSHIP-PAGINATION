@@ -11,7 +11,7 @@
                 <div class="card-body">
                     <form id="formIdCategory" class="form-horizontal" asp-action="Update" method="post">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <input type="hidden" asp-for="CategoryId" />
+                        <input type="hidden" asp-for="@Model.CategoryId" />
                         <div class="form-group row">
                             <label for="inputName" class="col-md-3 form-label">Category Name</label>
                             <div class="col-md-9">
@@ -41,26 +41,48 @@
 
 
 @section Scripts{
-   
-    <partial name="_JqueryScriptsPartial" />
+ 
+
+    @*<partial name="_JqueryScriptsPartial" />*@
+    @*   <partial name="_ValidationScriptsPartial" />*@
 
 }
 
-    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-
-    <script type="text/javascript">
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 
 
 
-        $('#edit-button').click(function (ev) {
-            debugger
-            var form = $("#formIdCategory").serialize();
+<script type="text/javascript">
 
-            var validator = $("#formIdCategory").validate();
-            if (validator.form() == "") {
+    $('#edit-button').click(function (ev) {
+        debugger
+        var form = $("#formIdCategory").serialize();
+
+        var validator = $("#formIdCategory").validate();
+        if (validator.form() == "") {
+            Toastify({
+                text: "Please filled the required form",
+                duration: 3000,
+
+                newWindow: true,
+                close: true,
+                gravity: "top", // `top` or `bottom`
+                position: "right",
+            }).showToast();
+
+
+            return false;
+        }
+
+        $.ajax({
+            
+            type: "Post",
+            url: "/Category/Update",
+            data: form,
+            success: function (data) {
                 Toastify({
-                    text: "Please filled the required form",
+                    text: "Edited Successfully",
                     duration: 3000,
 
                     newWindow: true,
@@ -69,44 +91,25 @@
                     position: "right",
                 }).showToast();
 
+                setTimeout(function () {
+                    location.reload(true);
+                }, 3000);
+            },
+            error: function (data) {
+                Toastify({
+                    text: "Failed while Editing",
+                    duration: 3000,
 
-                return false;
+                    newWindow: true,
+                    close: true,
+                    gravity: "top", // `top` or `bottom`
+                    position: "right",
+                }).showToast();
             }
-
-            $.ajax({
-                type: "Post",
-                url: "/Category/Update",
-                data: form,
-                success: function (data) {
-                    Toastify({
-                        text: "Edited Successfully",
-                        duration: 3000,
-
-                        newWindow: true,
-                        close: true,
-                        gravity: "top", // `top` or `bottom`
-                        position: "right",
-                    }).showToast();
-
-                    setTimeout(function () {
-                        location.reload(true);
-                    }, 3000);
-                },
-                error: function (data) {
-                    Toastify({
-                        text: "Failed while Editing",
-                        duration: 3000,
-
-                        newWindow: true,
-                        close: true,
-                        gravity: "top", // `top` or `bottom`
-                        position: "right",
-                    }).showToast();
-                }
-            })
-        });
-    </script>
+        })
+    });
+</script>
 
 
 
-    
+

@@ -27,9 +27,19 @@ namespace BLL.Services.Implementation
             _context = applicationDbContext;
             
         }
-        public Task<int> DeleteProduct(int ProductsId)
+        public async Task<int?> DeleteProduct(int ProductsId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var product = await uow.Repository<Product>().GetById(ProductsId) ?? throw new Exception("Product not Found");
+                uow.Repository<Product>().Delete(product);
+                await uow.SaveChangesAsync();
+                return product.CategoryId;
+
+            }catch(Exception ex)
+            {
+                throw new Exception("An error occured while deleting Products");
+            }
         }
 
         public async Task<List<ProductGetDTOs>> GetAllProduct()
@@ -107,9 +117,19 @@ namespace BLL.Services.Implementation
             }
         }
 
-        public Task<ProductGetDTOs> UpdateProduct(int ProductsId, ProductUpdateDTOs productDTOs)
+        public async Task<ProductGetDTOs> UpdateProduct(ProductUpdateDTOs productDTOs)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var productTobeUpdated = _mapper.Map<Product>(productDTOs);
+                uow.Repository<Product>().Update(productTobeUpdated);
+                await uow.SaveChangesAsync();
+                return _mapper.Map<ProductGetDTOs>(productTobeUpdated);
+
+            }catch (Exception ex)
+            {
+                throw new Exception("An error while Updating Product");
+            }
         }
     }
 }
