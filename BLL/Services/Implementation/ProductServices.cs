@@ -121,6 +121,16 @@ namespace BLL.Services.Implementation
         {
             try
             {
+                //var products = await uow.Repository<Product>().GetById(productDTOs.ProductId);
+                //if(products == null)
+                //{
+                //    throw new Exception("Product is not Found");
+                //}
+
+
+                //_context.Entry(products).State = EntityState.Detached;
+
+
                 var productTobeUpdated = _mapper.Map<Product>(productDTOs);
                 uow.Repository<Product>().Update(productTobeUpdated);
                 await uow.SaveChangesAsync();

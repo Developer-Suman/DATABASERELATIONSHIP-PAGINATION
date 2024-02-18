@@ -1,5 +1,4 @@
-﻿@using BLL.DTOs;
-@using BLL.DTOs.Products;
+﻿
 @model ProductIndexDTOs
 
 
@@ -52,15 +51,150 @@
 
 
                 <td class="numeric currency">
-                    <a asp-action="Update" asp-controller="Product" asp-route-id="@Model.productGetDTOs[i].ProductId">Update <i class="fa-solid fa-pen-to-square"></i></a>
-                    <a asp-action="Delete" asp-controller="Product" asp-route-id="@Model.productGetDTOs[i].ProductId"> <i class="fa-sharp fa-solid fa-trash"></i></a>
+                    <a class="btn btn-primary" id="btnUpdate" asp-controller="Product" asp-route-id="@Model.productGetDTOs[i].ProductId" data-id="@Model.productGetDTOs[i].ProductId " data-bs-target="#product-update" data-bs-toggle="modal">Update</a>
+                    <a class="btn btn-danger deleteBtn" data-ajax="true" asp-controller="Product" asp-route-id="@Model.productGetDTOs[i].ProductId" data-id="@Model.productGetDTOs[i].ProductId " data-bs-target="#product-delete" data-bs-toggle="modal"> Delete</a>
                 </td>
 
             </tr>
 
         }
 
-
     </tbody>
 
 </table>
+
+@*Model used for delete*@
+<div class="modal fade" id="product-delete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <h1>Delete</h1>
+                    <p>Are you sure you want to delete ?</p>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary productDeleteButton">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal for edit-->
+<div class="modal fade" id="product-update" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="product-content" style="width:100%">
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <partial name="_JqueryScriptsPartial" />
+
+    
+
+    <script>
+        $(document).ready(function () {
+
+            $("#btnUpdate").on("click", function(){
+                let id = $(this).data("id");
+
+                $.ajax({
+                    type:"GET",
+                    url: "/Product/UpdateProducts",
+                    data:{"Id":id},
+                    success: function(response){
+                        $('#product-content').html(response);
+                    }
+                })
+
+            });
+
+          
+
+
+            $(".deleteBtn").on("click", function () {
+                debugger
+                let id = $(this).data("id");
+                $('#product-delete').modal('show');
+
+                $(".productDeleteButton").on("click", function () {
+                    $.ajax({
+                        type: "POST",
+                        url: "/Product/DeleteProduct",
+                        data: { "productId": id },
+
+                        success: function (result) {
+                            if (result == true) {
+                                Toastify({
+                                    text: "Deleted Successfully",
+                                    duration: 2000,
+
+                                    newWindow: true,
+                                    close: true,
+                                    gravity: "top", // `top` or `bottom`
+                                    position: "right",
+                                }).showToast();
+
+                                // Update UI (remove row from table)
+                                $('tr[data-id="' + id + '"]').remove();
+
+                                setTimeout(function () {
+                                    location.reload(true);
+                                }, 2000);
+
+
+                            } else {
+                                Toastify({
+                                    text: "Error Whiile deleting",
+                                    duration: 2000,
+
+                                    newWindow: true,
+                                    close: true,
+                                    gravity: "top", // `top` or `bottom`
+                                    position: "right",
+                                }).showToast();
+
+                                setTimeout(function () {
+                                    location.reload(true);
+                                }, 2000)
+
+                            }
+
+                        },
+                        error: function (result) {
+                            Toastify({
+                                text: "Delete Failed",
+                                duration: 3000,
+
+                                newWindow: true,
+                                close: true,
+                                gravity: "top", // `top` or `bottom`
+                                position: "right",
+                            }).showToast();
+                        }
+
+
+
+                    });
+
+
+                });
+            });
+
+
+
+
+
+        });
+    </script>
+}
+

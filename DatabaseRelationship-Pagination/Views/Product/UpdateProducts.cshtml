@@ -6,10 +6,10 @@
         <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
             <div class="card">
                 <div class="card-header border-bottom-0">
-                    <h4 class="card-title">Update Category</h4>
+                    <h4 class="card-title">Update Product</h4>
                 </div>
                 <div class="card-body">
-                    <form id="formIdCategory" class="form-horizontal" asp-action="UpdateProducts" method="post">
+                    <form id="formIdProduct" class="form-horizontal"  method="post">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <input type="hidden" asp-for="@Model.ProductId" />
                         <div class="form-group row">
@@ -17,16 +17,14 @@
                             <div class="col-md-9">
                                 <input type="text" asp-for="@Model.ProductName" class="form-control" id="inputName" placeholder="Name" required>
                                 <span asp-validation-for="@Model.ProductName" class="text-danger"></span>
+                            </div>
 
+                              <label for="inputName" class="col-md-3 form-label">Product Price</label>
+                            <div class="col-md-9">
                                 <input type="text" asp-for="@Model.Price" class="form-control" id="inputName" placeholder="Name" required>
                                 <span asp-validation-for="@Model.Price" class="text-danger"></span>
 
-                                <input type="text" asp-for="@Model.CategoryName" class="form-control" id="inputName" placeholder="Name" required>
-                                <span asp-validation-for="@Model.CategoryName" class="text-danger"></span>
-
                             </div>
-
-
 
                         </div>
 
@@ -44,3 +42,71 @@
         </div>
     </div>
 </div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+<script type="text/javascript">
+
+  $(document).ready(function(){
+        $('#edit-button').click(function (ev) {
+            debugger
+            var form = $("#formIdProduct").serialize();
+
+            var validator = $("#formIdProduct").validate();
+            if (validator.form() == "") {
+                Toastify({
+                    text: "Please filled the required form",
+                    duration: 3000,
+
+                    newWindow: true,
+                    close: true,
+                    gravity: "top", // `top` or `bottom`
+                    position: "right",
+                }).showToast();
+
+
+                return false;
+            }
+
+            $.ajax({
+
+                type: "Post",
+                url: "/Product/UpdateProducts",
+                data: form,
+                success: function (data) {
+                    Toastify({
+                        text: "Edited Successfully",
+                        duration: 3000,
+
+                        newWindow: true,
+                        close: true,
+                        gravity: "top", // `top` or `bottom`
+                        position: "right",
+                    }).showToast();
+
+                    setTimeout(function () {
+                        location.reload(true);
+                    }, 3000);
+                },
+                error: function (data) {
+                    Toastify({
+                        text: "Failed while Editing",
+                        duration: 3000,
+
+                        newWindow: true,
+                        close: true,
+                        gravity: "top", // `top` or `bottom`
+                        position: "right",
+                    }).showToast();
+                }
+            });
+
+        });
+  })
+
+
+
+</script>
