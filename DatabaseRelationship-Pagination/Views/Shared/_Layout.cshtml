@@ -7,16 +7,16 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 
-   
-    <link href="~/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet"/>
+
+    <link href="~/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet" />
 
 
     <!--Favicon -->
     <link rel="icon" href="~/Img/logo.png" type="image/x-icon" />
-    <link rel="stylesheet" href="~/assets/plugins/bootstrap/css/bootstrap.css"/>
-    <link rel="stylesheet" href="~/assets/plugins/animated/animated.css"/>
-    <link rel="stylesheet" href="~/assets/css/sidemenu.css"/>
-    <link rel="stylesheet" href="~/assets/plugins/p-scrollbar/p-scrollbar.css"/>
+    <link rel="stylesheet" href="~/assets/plugins/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/assets/plugins/animated/animated.css" />
+    <link rel="stylesheet" href="~/assets/css/sidemenu.css" />
+    <link rel="stylesheet" href="~/assets/plugins/p-scrollbar/p-scrollbar.css" />
 </head>
 <body>
     <header>
@@ -32,7 +32,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">HOME</a>
                         </li>
-                        
+
 
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -43,8 +43,8 @@
                                 <li><a class="dropdown-item" asp-controller="Category" asp-action="GetCategoryWithProduct">GetCategoryWithProduct</a></li>
                                 <li><a class="dropdown-item" asp-controller="Category" asp-action="GetProductFromCategories">GetProductFromCategories</a></li>
                                 <li><a class="dropdown-item" asp-controller="Category" asp-action="Create">Create</a></li>
-    
-    
+
+
                             </ul>
                         </li>
 
@@ -57,7 +57,7 @@
                                 <li><a class="dropdown-item" asp-controller="Product" asp-action="Create">Create</a></li>
                                 <li><a class="dropdown-item" asp-controller="Product" asp-action="GetProductFromCategories">GetProductFromCategories</a></li>
                                 <li><a class="dropdown-item" asp-controller="Product" asp-action="Create">Create</a></li>
-         
+
 
                             </ul>
                         </li>
@@ -71,13 +71,13 @@
                                 <li><a class="dropdown-item" asp-controller="Feedback" asp-action="GetAllFeedback">GetAllFeedback</a></li>
                                 <li><a class="dropdown-item" asp-controller="Feedback" asp-action="GetProductFromCategories">GetProductFromCategories</a></li>
                                 <li><a class="dropdown-item" asp-controller="Feedback" asp-action="Create">Create</a></li>
-    
+
 
                             </ul>
                         </li>
-                       
 
-                   
+
+
                     </ul>
                 </div>
             </div>
@@ -94,15 +94,15 @@
             &copy; 2024 - DatabaseRelationship_Pagination - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-  
-  
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-   <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-   
-   
-    
+
+
+
+
+
 </body>
 
 @await RenderSectionAsync("Scripts", required: false)
 </html>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

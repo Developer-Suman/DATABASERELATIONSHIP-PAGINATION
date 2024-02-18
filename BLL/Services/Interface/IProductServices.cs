@@ -13,7 +13,7 @@ namespace BLL.Services.Interface
         Task<List<ProductGetDTOs>> GetAllProduct();
         Task<ProductGetDTOs> GetProductById(int id);
         Task<ProductGetDTOs> SaveProduct(ProductCreateDTOs productDTOs);
-        Task<ProductGetDTOs> UpdateProduct(int ProductsId,ProductUpdateDTOs productDTOs);
-        Task<int> DeleteProduct(int ProductsId);
+        Task<ProductGetDTOs> UpdateProduct(ProductUpdateDTOs productDTOs);
+        Task<int?> DeleteProduct(int ProductsId);
     }
 }
