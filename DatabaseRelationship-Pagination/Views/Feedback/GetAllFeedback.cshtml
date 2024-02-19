@@ -1,5 +1,4 @@
-﻿@using BLL.DTOs;
-@using BLL.DTOs.Feedback;
+﻿
 @model FeedbackIndexDTOs
 
 
@@ -56,8 +55,8 @@
 
 
                 <td class="numeric currency">
-                    <a asp-action="Update" asp-controller="Product" asp-route-id="@Model.FeedbackListDTOs[i].ProductId"> <i class="fa-solid fa-pen-to-square"></i></a>
-                    <a asp-action="Delete" asp-controller="Product" asp-route-id="@Model.FeedbackListDTOs[i].ProductId"> <i class="fa-sharp fa-solid fa-trash"></i></a>
+                    <a class="btn btn-primary" id="btnUpdate" asp-route-id="@Model.FeedbackListDTOs[i].ProductId" data-id="@Model.FeedbackListDTOs[i].FeedbackId" data-bs-target="#feedback-update" data-bs-toggle="modal"> Update</a>
+                    <a class="btn btn-danger btnDelete" asp-route-id="@Model.FeedbackListDTOs[i].ProductId" data-id="@Model.FeedbackListDTOs[i].FeedbackId" data-bs-target="#feedback-delete" data-bs-toggle="modal"> Delete</a>
                 </td>
 
             </tr>
@@ -68,4 +67,131 @@
     </tbody>
 
 </table>
+
+
+@*Modal used for delete*@
+<div class="modal fade" id="feedback-delete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <h1>Delete</h1>
+                    <p>Are you sure you want to delete ?</p>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary modalDeleteBtn">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Modal for Edit*@
+
+<div class="modal fade" id="feedback-update" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="feedback-content" style="width:100%">
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_JqueryScriptsPartial");
+    }
+
+    <script>
+        $(document).ready(function(){
+            debugger
+            $('#btnUpdate').on("click", function(){
+                let id = $(this).data("id");
+                $.ajax({
+                    type:"Get",
+                    url: "/Feedback/UpdateFeedback",
+                    data: {"Id": id},
+                    success:function(response){
+                        $('#feedback-content').html(response);
+                    }
+                })
+
+            });
+
+            $('.btnDelete').on("click", function(){
+                let id = $(this).data("id");
+                $('feedback-delete').modal('show');
+
+                $('.modalDeleteBtn').on("click", function(){
+                    $.ajax({
+                        type:"POST",
+                        url: "/Feedback/DeleteFeedback",
+                        data: { "FeedbackId": id },
+                        success: function(result)
+                        {
+                            if (result == true) {
+                                Toastify({
+                                    text: "Deleted Successfully",
+                                    duration: 3000,
+
+                                    newWindow: true,
+                                    close: true,
+                                    gravity: "top", // `top` or `bottom`
+                                    position: "right",
+                                }).showToast();
+
+                                // Update UI (remove row from table)
+                                $('tr[data-id="' + id + '"]').remove();
+
+                                setTimeout(function () {
+                                    location.reload(true);
+                                }, 3000);
+
+
+                            } else {
+                                Toastify({
+                                    text: "Error Whiile deleting",
+                                    duration: 3000,
+
+                                    newWindow: true,
+                                    close: true,
+                                    gravity: "top", // `top` or `bottom`
+                                    position: "right",
+                                }).showToast();
+
+                                setTimeout(function () {
+                                    location.reload(true);
+                                }, 3000)
+
+                            }
+
+                        },
+                        error: function(result)
+                        {
+
+                            Toastify({
+                                text: "Delete Failed",
+                                duration: 3000,
+
+                                newWindow: true,
+                                close: true,
+                                gravity: "top", // `top` or `bottom`
+                                position: "right",
+                            }).showToast();
+                        }
+                    })
+                })
+
+            });
+
+
+        });
+
+
+    </script>
+}
 

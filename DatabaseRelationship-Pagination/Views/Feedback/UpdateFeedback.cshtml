@@ -1,0 +1,110 @@
+﻿@model FeedbackGetDTOs;
+
+<div class="container" style="max-width:785px;">
+
+    <div class="row">
+        <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
+            <div class="card">
+                <div class="card-header border-bottom-0">
+                    <h4 class="card-title">Update Feedback</h4>
+                </div>
+                <div class="card-body">
+                    <form id="formIdFeedback" class="form-horizontal" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="@Model.FeedbackId" />
+                        <input type="hidden" asp-for="@Model.ProductId" />
+                        <div class="form-group row">
+                            <label for="inputName" class="col-md-3 form-label">Feedback Name</label>
+                            <div class="col-md-9">
+                                <input type="text" asp-for="@Model.FeedbackName" class="form-control" id="inputName" placeholder="Name" required>
+                                <span asp-validation-for="@Model.FeedbackName" class="text-danger"></span>
+                            </div>
+
+                       
+
+                           
+
+                        </div>
+
+
+                        <div class="form-group mb-0 mt-4 row justify-content-end">
+                            <div class="col-md-9">
+                                <button id="edit-button" class="btn btn-primary" type="button">Update</button>
+                                <a class="btn btn-secondary btn-cancel" data-toggle="modal" data-target=".department-modal">Cancel</a>
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('#edit-button').click(function (ev) {
+            debugger
+            var form = $("#formIdFeedback").serialize();
+
+            var validator = $("#formIdFeedback").validate();
+            if (validator.form() == "") {
+                Toastify({
+                    text: "Please filled the required form",
+                    duration: 3000,
+
+                    newWindow: true,
+                    close: true,
+                    gravity: "top", // `top` or `bottom`
+                    position: "right",
+                }).showToast();
+
+
+                return false;
+            }
+
+            $.ajax({
+
+                type: "Post",
+                url: "/Feedback/UpdateFeedback",
+                data: form,
+                success: function (data) {
+                    Toastify({
+                        text: "Edited Successfully",
+                        duration: 3000,
+
+                        newWindow: true,
+                        close: true,
+                        gravity: "top", // `top` or `bottom`
+                        position: "right",
+                    }).showToast();
+
+                    setTimeout(function () {
+                        location.reload(true);
+                    }, 3000);
+                },
+                error: function (data) {
+                    Toastify({
+                        text: "Failed while Editing",
+                        duration: 3000,
+
+                        newWindow: true,
+                        close: true,
+                        gravity: "top", // `top` or `bottom`
+                        position: "right",
+                    }).showToast();
+                }
+            });
+
+        });
+    })
+
+
+
+</script>

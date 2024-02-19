@@ -37,7 +37,12 @@ namespace DatabaseRelationship_Pagination.Controllers
         {
             try
             {
-                View(await _feedbackServices.CreateFeedback(feedbackCreateDTOs));
+                if(ModelState.IsValid)
+                {
+                    View(await _feedbackServices.CreateFeedback(feedbackCreateDTOs));
+
+                }
+                
                 return RedirectToAction("CreateFeedbacks");
 
             }catch (Exception ex)
@@ -59,6 +64,42 @@ namespace DatabaseRelationship_Pagination.Controllers
             catch (Exception ex)
             {
                 throw new Exception("An error occured when we fetch all feedback", ex);
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UpdateFeedback(int Id)
+        {
+            FeedbackGetDTOs feedbackGetDTOs = await _feedbackServices.GetFeedbacksById(Id);
+            return PartialView(feedbackGetDTOs);
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateFeedback(FeedbackUpdateDTOs feedbackUpdateDTOs)
+        {
+            try
+            {
+                await _feedbackServices.UpdateFeedback(feedbackUpdateDTOs);
+                return Json(true);
+
+            }catch(Exception ex)
+            {
+                return Json(false);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteFeedback(int FeedbackId)
+        {
+            try
+            {
+                await _feedbackServices.DeleteFeedback(FeedbackId);
+                return Json(true);
+
+            }catch (Exception ex)
+            {
+                return Json(false);
             }
         }
     }
