@@ -22,7 +22,11 @@ namespace DatabaseRelationship_Pagination.Configs
 
             #region Product
             CreateMap<Product, ProductGetDTOs>().ReverseMap();
-            CreateMap<Product, ProductUpdateDTOs>().ReverseMap();
+            CreateMap<ProductUpdateDTOs, Product>().ReverseMap()
+                .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.ProductId))
+                .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.ProductName))
+                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Price))
+                .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.CategoryId));
             CreateMap<Product, ProductCreateDTOs>().ReverseMap();
 
             #endregion
