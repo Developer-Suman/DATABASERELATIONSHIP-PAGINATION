@@ -12,6 +12,7 @@
                     <form id="formIdProduct" class="form-horizontal"  method="post">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <input type="hidden" asp-for="@Model.ProductId" />
+                        <input type="hidden" asp-for="@Model.CategoryId" />
                         <div class="form-group row">
                             <label for="inputName" class="col-md-3 form-label">Product Name</label>
                             <div class="col-md-9">
