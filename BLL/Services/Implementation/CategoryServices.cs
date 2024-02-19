@@ -201,16 +201,12 @@ namespace BLL.Services.Implementation
         {
             try
             {
-                //var category = await uow.Repository<Category>().GetById(categoryDTOs.CategoryId);
-                //if(category == null)
-                //{
-                //    throw new Exception("Category  not found while updating");
-                //}
-                var categoryToBeUpdated = _mapper.Map<Category>(categoryDTOs);
-                uow.Repository<Category>().Update(categoryToBeUpdated);
+                var category = await uow.Repository<Category>().GetById(categoryDTOs.CategoryId) ?? throw new Exception("Category Not Found");
+               
+                _mapper.Map(categoryDTOs, category);
                 await uow.SaveChangesAsync();
 
-                return _mapper.Map<CategoryGetDTOs>(categoryToBeUpdated);
+                return _mapper.Map<CategoryGetDTOs>(category);
 
             }catch( Exception ex)
             {

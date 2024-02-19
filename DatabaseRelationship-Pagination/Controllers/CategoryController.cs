@@ -94,11 +94,8 @@ namespace DatabaseRelationship_Pagination.Controllers
         {
             try
             {
-                var deleteId = await _categoryServices.DeleteCategory(CategoryId);
-                if (deleteId == null)
-                {
-                    throw new Exception("Delete Item is not Found");
-                }
+                await _categoryServices.DeleteCategory(CategoryId);
+               
                 return Json(true);
 
             }catch(Exception ex)

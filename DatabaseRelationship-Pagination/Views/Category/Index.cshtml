@@ -50,7 +50,7 @@
 
                     <td class="numeric currency">
 
-                        <a class="btn btn-primary" id="btnUpdate" asp-action="Update" asp-controller="Category" asp-route-id="@Model.CategoryListDTOs[i].CategoryId" data-id="@Model.CategoryListDTOs[i].CategoryId" data-bs-target="#category-update" data-bs-toggle="modal"> Update<i class="fa-solid fa-pen-to-square"></i></a>
+                        <a class="btn btn-primary" id="btnUpdate" asp-route-id="@Model.CategoryListDTOs[i].CategoryId" data-id="@Model.CategoryListDTOs[i].CategoryId" data-bs-target="#category-update" data-bs-toggle="modal"> Update<i class="fa-solid fa-pen-to-square"></i></a>
                         <a class="btn btn-danger btnDelete" data-ajax="true" asp-action="Delete" asp-controller="Category" data-id="@Model.CategoryListDTOs[i].CategoryId" asp-route-id="@Model.CategoryListDTOs[i].CategoryId" data-bs-target="#category-delete" data-bs-toggle="modal">Delete <i class="fa-sharp fa-solid fa-trash"></i></a>
                     </td>
 
@@ -103,20 +103,15 @@
     
 </body>
 
+
+
 @section Scripts {
-                            
-                                
+    @{
+        await Html.RenderPartialAsync("_JqueryScriptsPartial");
+    }                 
+
     <script>
         $(document).ready(function () {
-
-            //$(".btnUpdate").on("click", function(){
-            //    debugger
-            //    let id = $(this).data("id");
-            //    $('#category-update').modal('show');
-            //})
-
-
-
             $("#btnUpdate").on("click", function () {
                 let id = $(this).data("id");
                 $.ajax({

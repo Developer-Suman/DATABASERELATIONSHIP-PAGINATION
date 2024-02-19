@@ -96,17 +96,13 @@ namespace BLL.Services.Implementation
         {
             try
             {
-                var feedback = await uow.Repository<Feedback>().GetById(feedbackUpdateDTOs.FeedbackId);
-                if(feedback is null)
-                {
-                    throw new Exception("Feedback is null, unable to update feedback");
-
-                }
-                var feedbackToBeupdated = _mapper.Map<Feedback>(feedbackUpdateDTOs);
-                uow.Repository<Feedback>().Update(feedbackToBeupdated);
+                var feedback = await uow.Repository<Feedback>().GetById(feedbackUpdateDTOs.FeedbackId) ?? throw new Exception("No feedback Found");
+              
+                _mapper.Map(feedbackUpdateDTOs, feedback);
+              
                 await uow.SaveChangesAsync();
 
-                return _mapper.Map<FeedbackGetDTOs>(feedbackToBeupdated);
+                return _mapper.Map<FeedbackGetDTOs>(feedback);
 
 
             }catch(Exception ex)

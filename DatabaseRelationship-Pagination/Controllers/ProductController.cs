@@ -94,6 +94,7 @@ namespace DatabaseRelationship_Pagination.Controllers
         {
             try
             {
+
                 var deleteProduct = await _productServices.DeleteProduct(productId);
                 if(deleteProduct == null)
                 {
