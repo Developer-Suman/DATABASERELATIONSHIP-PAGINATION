@@ -1,8 +1,5 @@
 ﻿
 @model FeedbackIndexDTOs
-
-
-<h12>Successfully Added Product</h12>
 <style>
     table {
         width: 100%;
@@ -31,6 +28,28 @@
     }
 
 </style>
+
+
+<div class="container-fluid">
+    <div class="row">
+        @for (int i = 0; i < Model.FeedbackListDTOs.Count(); i++)
+        {
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    <img src="https://s.yimg.com/os/creatr-uploaded-images/2020-01/8ed8ded0-30db-11ea-9ffa-63728c0e08f8" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">@Model.FeedbackListDTOs[i].Product.ProductName</h5>
+                        <p class="card-text">@Model.FeedbackListDTOs[i].FeedbackName</p>
+                        <a class="btn btn-primary" id="btnUpdate" asp-route-id="@Model.FeedbackListDTOs[i].ProductId" data-id="@Model.FeedbackListDTOs[i].FeedbackId" data-bs-target="#feedback-update" data-bs-toggle="modal"> Update</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+
 <table>
     <thead>
         <tr>
